@@ -1,0 +1,79 @@
+---
+layout: page
+title: IntermediateR for reproducible scientific analysis
+subtitle: data.table
+minutes: 20
+---
+
+
+> ## Learning objectives {.objectives}
+>
+> * To know how to perform common data.frame tasks using data.table
+> * To know how to examine the structure of objects in R
+> * To be able to set keys for data.table
+>
+
+First, we will be learning about the `data.table` package. Data tables
+have a number of advantages over data frames:
+
+ * It provides a huge speed increase over data frames. Tasks that would
+   normally take hours with a data frame take seconds with data tables.
+ * It is much more concise to write and allows you to avoid complicated
+   which statements and repeated subsetting.
+ * Its key system allows you to merge/query multiple tables without 
+   worrying about matching rownames.
+
+### Reading in data
+
+Let's load in the package and read in some data:
+
+```{r}
+library("data.table")
+gap <- fread("data/gapminder-FiveYearData.csv")
+gap
+```
+
+We can see the data has loaded correctly using the `fread` function from the 
+data.table package. Note that unlike data frames, R will print out the first and 
+last 5 rows ofthe table.
+
+`fread` works similary to `read.table`: it tries to make
+sense of the data and read it in appropriately. It is much faster than 
+`read.table` for large tables, but is slightly less sophisticated. You may find
+yourself needing to use `read.table` or one of its derivative functions to load
+in data correctly, then casting to a data table:
+
+```{r}
+# Note that as.data.table will throw out rownames unless you set 
+#'keep.rownames = TRUE'
+gap_df <- read.csv("data/gapminder-FiveYearData.csv")
+gap_dt2 <- as.data.table(gap_df)
+```
+
+We can use the structure function (`str`) to examine what exactly a data.table 
+is:
+
+```{r}
+str(gap)
+```
+
+A data.table is simply a data.frame with an additional class attached to it, 
+along with a special attribute, ".internal.selfref", which is an external pointer
+that data.table uses to work with the data in memory in a lower level language.
+
+Data tables are backwards compatible with most functions that require data 
+frames, however you may occasionally find that you need to cast them using
+`as.data.frame` on functions which check only the first class of the object.
+
+To prove this to ourself, we can check the objets for equality:
+
+```{r}
+all.equal(gap, gap_df)
+all.equal(gap, gap_df, check.attributes = FALSE)
+```
+
+This shows us that the only the attributes of the object are different, but the
+underlying data is the same.
+
+
+
