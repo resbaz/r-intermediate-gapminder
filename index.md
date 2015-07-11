@@ -39,6 +39,7 @@ and are expected knowledge for this workshop:
 ## Topics
 
 ### Session 1 (~ 4 hours)
+
 1.  [Data.table](14-data-table.html)
 2.  [Reshaping data](15-reshape2.html)
 3.  [For loops](16-for.html)
