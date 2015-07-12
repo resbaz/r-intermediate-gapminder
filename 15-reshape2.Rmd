@@ -1,0 +1,118 @@
+---
+layout: page
+title: IntermediateR for reproducible scientific analysis
+subtitle: reshape2
+minutes: 20
+---
+
+
+> ## Learning objectives {.objectives}
+>
+> * To know how split a column by a group to create multiple columns
+> * To know how to combine multiple columns into one with different groupings.
+>
+
+So far we've been working with the gapminder dataset:
+
+```{r}
+library("data.table")
+gap <- fread("data/gapminder-FiveYearData.csv")
+gap
+```
+
+The format that this dataset has been provided in is called a "long" format:
+each variable has its own column, and there are several columns with identifying
+information: where those observations came from/groupings in the data.
+
+This is a format that is convenient for rapid analysis using R: it is easy to
+manipulate, filter and query using `data.table`, and is the format `ggplot2`
+expects for plotting.
+
+However, data often does not come in this format. We might sometimes find we are
+given data in what is known as a "wide" format: in which variables may be split
+over multiple columns, one for each group. Let's read in an alternative version
+of the gapminder dataset:
+
+```{r}
+# This is an example where `fread` doesn't work: it loses the column names!
+gapWide <- as.data.table(read.csv("data/gapminder-wide-format.csv", header=TRUE))
+gapWide
+```
+
+This contains exactly the same data, but the three variables, "gdpPercap", "pop",
+and "lifeExp" have one column for each year of collection. This format is useful
+if you wish to calculate group-wise properties, e.g. the correlation structure
+between groups. It is also a more natural way for data collectors to structure
+data in another application, such as Excel.
+
+Being able to transform between "wide" and "long" formats is an incredible useful
+skill that will save you a lot of time in the future. We can do this using the
+`reshape2` package.
+
+### Combining columns
+
+To collapse multiple columns into one we use the `melt` function:
+
+```{r}
+library(reshape2)
+gapLong <- melt(
+  data=gapWide,
+  id.vars=c("continent", "country") # All other columns will be collapsed into one
+)
+```
+
+We get a warning because the 'pop' columns are of type 'integer' (i.e. whole 
+numbers) while the 'gdpPercap' and 'lifeExp' columns are type 'double' (i.e. 
+decimal values).
+
+This melt has collapsed the table too far. We need to separate out the different
+variable types into their own columns. First, lets split the variable column into
+variable type and year:
+
+```{r}
+gapLong[, c("var", "year") := colsplit(variable, "\\.", c("var", "year"))]
+gapLong
+```
+
+Let's break this down.
+
+First, `colsplit(variable, "\\.", c("var", "year"))` creates two columns called 
+"var" and "year" from the "variable" column, splitting each value on the ".".
+We need to specific the pattern as `\\.` because `.` by itself is a wild card
+character: it would match every character in the string.
+
+Next, we create two new columns in the `gapLong` data table using the `:=` 
+operator. To create multiple columns, we specify their names in a vector to the
+left of the `:=` operator.
+
+Now that we're happy this has worked, we can delete the old `variable` column:
+
+```{r}
+gapLong[,variable := NULL]
+gapLong
+```
+
+Finally, to split out the `value` column into the groups stored in `var`, we use
+the `dcast` function. Since we'd like to keep the result as a data table, we'll
+explicitly call the method from the `data.table` package:
+
+```{r}
+gapLong <- dcast.data.table(
+  data=gapLong,  
+  # unique identifier columns go to the left of the '~', separated by '+' signs.
+  # The grouping column goes to the right of the '~'.
+  formula=continent+country+year~var,
+  # which column stores the values to be spread over the new columns
+  value.var="value" 
+)
+gapLong
+```
+
+And now we're back where we've started with the long data!
+
+We've shown you the simplest cases for reshaping data. More complex cases may
+require you to `melt` or `dcast` in several steps, and `rbind` the results.
+
+Other packages you may find useful for this task are 
+[tidyr](http://cran.r-project.org/web/packages/tidyr/index.html) and 
+[splitstackshape](http://cran.r-project.org/web/packages/splitstackshape/index.html)
