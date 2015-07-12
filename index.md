@@ -49,8 +49,8 @@ and are expected knowledge for this workshop:
 ### Session 2 (~ 3 hours)
 
 6.  [R markdown](18-r-markdown.html)
-7.  [plyr](19-plyr.html)
-8.  [Parallel for loops](20-foreach.html)
+7.  [plyr](12-plyr.html)
+8.  [Parallel for loops](19-foreach.html)
 9.  [Functions](07-functions.html)
 10. [Wrapping up](13-wrap-up.html)
 
