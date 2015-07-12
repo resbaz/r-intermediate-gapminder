@@ -75,5 +75,150 @@ all.equal(gap, gap_df, check.attributes = FALSE)
 This shows us that the only the attributes of the object are different, but the
 underlying data is the same.
 
+### Basic operations
+
+Nearly all operations on data tables are performed inside the `[` function, and
+are performed in place in memory. Let's take a look at some operations and their
+data frame equivalents:
+
+To select or filter rows, we use the first argument of `[` just like with data
+frames:
+
+```{r}
+gap[continent == "Oceania"]
+# data frame equivalent
+gap_df[gap_df$continent == "Oceania",]
+```
+
+The data table knows when we type `continent` to look for that as a column in
+the table: removing the redundant text we'd need to type for data.frames. This 
+becomes even more convenient when filtering on multiple columns:
+
+```{r}
+gap[continent == "Oceania" & country == "Australia" & year %in% c(1952, 2007)]
+# data frame equivalent
+gap_df[gap_df$continent == "Oceania" & gap_df$country == "Australia" & gap_df$year %in% c(1952, 2007),]
+```
+
+Note that the data frame call will still work on the data table:
+
+```{r}
+gap[gap$continent == "Oceania" & gap$country == "Australia" & gap$year %in% c(1952, 2007),]
+```
+
+To select columns we use the second argument to `[`, just like data.frames:
+
+```{r}
+gap[,continent]
+# data frame equivalent
+gap_df[,"continent"]
+```
+
+To select multiple columns, we need to pass in the column names as a list:
+
+```{r}
+gap[, list(continent, country, pop)]
+# data frame equivalent
+gap_df[, c("continent", "country", "pop")]
+```
+
+We can also rename columns in the output using the list:
+
+```{r}
+gap[, list(a=continent, b=country, c=pop)] # This does not alter the data table
+```
+
+We can create temporary columns, those that only exist in the output data 
+structure using list arguments:
+
+```{r}
+# total_gdp only exists in the output
+gap[,list(continent, country, year, total_gdp=pop*gdpPercap)]
+# Lets see what gap contains again:
+gap
+# The equivalent data frame call:
+cbind(gap_df[,c("continent", "country", "year")], total_gdp = gap_df$pop * gap_df$gdpPercap)
+```
+
+To create a new column in the data table, we have to use the special operator 
+`:=`:
+
+```{r}
+# Add a new column to the gapminder data with total gdp
+gap[, total_gdp := gdpPercap * pop]
+# data frame equivalent
+gap_df <- cbind(gap_df, total_gdp = gap_df$gdpPercap * gap_df$pop)
+```
+
+### Data table specific operations
+
+Data tables have a number of special variables that are useful in calculations:
+
+```{r}
+# get all the columns
+gap[,.SD]
+# get the number of rows
+gap[,.N]
+# generate indices for the rows
+gap[,.I]
+```
+
+These become useful in conjuction with data table's extra arguments to `[`:
+
+```{r}
+# How many countries in each continent?
+gap[year == 2007, list(countries=.N), by=continent]
+```
+
+The `by` argument lets you calculate things within groups:
+
+```{r}
+# Mean life expectancy per continent per year:
+gap[, list(avgLifeExp=mean(lifeExp)), by=list(continent, year)]
+```
+
+The `with` argument lets you pass in column names as a character vector:
+
+```{r}
+gap[,c("continent", "country", "year"), with=FALSE]
+```
+
+### Keys 
+
+One of the advantages of data table is the ability to set each tables "keys":
+the columns which will act as unique identifiers for each row, for example:
+
+```{r}
+setkey(gap, continent, country, year)
+```
+
+We can see the change using the `tables` function, which shows all data tables 
+in the R session:
+
+```{r}
+tables()
+```
+
+This is really useful when you have multiple tables: allowing you to efficiently
+merge tables together, confidently and concisely:
+
+```{r}
+landSize <- data.table(
+  country=c("Australia", "New Zealand"),
+  size=c(7692024, 268021)
+)
+setkey(landSize, country)
+setkey(gap, country)
+# Join landSize to gap, keeping only 'keys' (rows) in gap that also exist in
+# landSize
+gap[landSize]
+# And vice-versa:
+landSize[gap]
+```
+
+To learn more about data table, you can check out the package Vignette on CRAN:
+<http://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.pdf>
+
+
 
 
