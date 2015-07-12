@@ -150,6 +150,15 @@ gap[, total_gdp := gdpPercap * pop]
 gap_df <- cbind(gap_df, total_gdp = gap_df$gdpPercap * gap_df$pop)
 ```
 
+To delete a column, we assign it `NULL`
+
+```{r}
+# Delete the total_gdp column
+gap[, total_gdp := NULL]
+# data frame equivalent
+gap_df <- gap_df[, -which(names(gap_df) == "total_gdp")]
+```
+
 ### Data table specific operations
 
 Data tables have a number of special variables that are useful in calculations:
