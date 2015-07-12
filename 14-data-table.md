@@ -4361,6 +4361,34 @@ gap[, total_gdp := gdpPercap * pop]
 gap_df <- cbind(gap_df, total_gdp = gap_df$gdpPercap * gap_df$pop)
 ```
 
+To delete a column, we assign it `NULL`
+
+
+```r
+# Delete the total_gdp column
+gap[, total_gdp := NULL]
+```
+
+```
+##           country year      pop continent lifeExp gdpPercap
+##    1: Afghanistan 1952  8425333      Asia  28.801  779.4453
+##    2: Afghanistan 1957  9240934      Asia  30.332  820.8530
+##    3: Afghanistan 1962 10267083      Asia  31.997  853.1007
+##    4: Afghanistan 1967 11537966      Asia  34.020  836.1971
+##    5: Afghanistan 1972 13079460      Asia  36.088  739.9811
+##   ---                                                      
+## 1700:    Zimbabwe 1987  9216418    Africa  62.351  706.1573
+## 1701:    Zimbabwe 1992 10704340    Africa  60.377  693.4208
+## 1702:    Zimbabwe 1997 11404948    Africa  46.809  792.4500
+## 1703:    Zimbabwe 2002 11926563    Africa  39.989  672.0386
+## 1704:    Zimbabwe 2007 12311143    Africa  43.487  469.7093
+```
+
+```r
+# data frame equivalent
+gap_df <- gap_df[, -which(names(gap_df) == "total_gdp")]
+```
+
 ### Data table specific operations
 
 Data tables have a number of special variables that are useful in calculations:
@@ -4372,18 +4400,18 @@ gap[,.SD]
 ```
 
 ```
-##           country year      pop continent lifeExp gdpPercap  total_gdp
-##    1: Afghanistan 1952  8425333      Asia  28.801  779.4453 6567086330
-##    2: Afghanistan 1957  9240934      Asia  30.332  820.8530 7585448670
-##    3: Afghanistan 1962 10267083      Asia  31.997  853.1007 8758855797
-##    4: Afghanistan 1967 11537966      Asia  34.020  836.1971 9648014150
-##    5: Afghanistan 1972 13079460      Asia  36.088  739.9811 9678553274
-##   ---                                                                 
-## 1700:    Zimbabwe 1987  9216418    Africa  62.351  706.1573 6508240905
-## 1701:    Zimbabwe 1992 10704340    Africa  60.377  693.4208 7422611852
-## 1702:    Zimbabwe 1997 11404948    Africa  46.809  792.4500 9037850590
-## 1703:    Zimbabwe 2002 11926563    Africa  39.989  672.0386 8015110972
-## 1704:    Zimbabwe 2007 12311143    Africa  43.487  469.7093 5782658337
+##           country year      pop continent lifeExp gdpPercap
+##    1: Afghanistan 1952  8425333      Asia  28.801  779.4453
+##    2: Afghanistan 1957  9240934      Asia  30.332  820.8530
+##    3: Afghanistan 1962 10267083      Asia  31.997  853.1007
+##    4: Afghanistan 1967 11537966      Asia  34.020  836.1971
+##    5: Afghanistan 1972 13079460      Asia  36.088  739.9811
+##   ---                                                      
+## 1700:    Zimbabwe 1987  9216418    Africa  62.351  706.1573
+## 1701:    Zimbabwe 1992 10704340    Africa  60.377  693.4208
+## 1702:    Zimbabwe 1997 11404948    Africa  46.809  792.4500
+## 1703:    Zimbabwe 2002 11926563    Africa  39.989  672.0386
+## 1704:    Zimbabwe 2007 12311143    Africa  43.487  469.7093
 ```
 
 ```r
@@ -4666,12 +4694,9 @@ tables()
 ```
 
 ```
-##      NAME     NROW NCOL MB
-## [1,] gap     1,704    7  1
-## [2,] gap_dt2 1,704    6  1
-##      COLS                                                  
-## [1,] country,year,pop,continent,lifeExp,gdpPercap,total_gdp
-## [2,] country,year,pop,continent,lifeExp,gdpPercap          
+##      NAME     NROW NCOL MB COLS                                        
+## [1,] gap     1,704    6  1 country,year,pop,continent,lifeExp,gdpPercap
+## [2,] gap_dt2 1,704    6  1 country,year,pop,continent,lifeExp,gdpPercap
 ##      KEY                   
 ## [1,] continent,country,year
 ## [2,]                       
@@ -4695,58 +4720,32 @@ gap[landSize]
 ```
 
 ```
-##         country year      pop continent lifeExp gdpPercap    total_gdp
-##  1:   Australia 1952  8691212   Oceania  69.120  10039.60  87256254102
-##  2:   Australia 1957  9712569   Oceania  70.330  10949.65 106349227169
-##  3:   Australia 1962 10794968   Oceania  70.930  12217.23 131884573002
-##  4:   Australia 1967 11872264   Oceania  71.100  14526.12 172457986742
-##  5:   Australia 1972 13177000   Oceania  71.930  16788.63 221223770658
-##  6:   Australia 1977 14074100   Oceania  73.490  18334.20 258037329175
-##  7:   Australia 1982 15184200   Oceania  74.740  19477.01 295742804309
-##  8:   Australia 1987 16257249   Oceania  76.320  21888.89 355853119294
-##  9:   Australia 1992 17481977   Oceania  77.560  23424.77 409511234952
-## 10:   Australia 1997 18565243   Oceania  78.830  26997.94 501223252921
-## 11:   Australia 2002 19546792   Oceania  80.370  30687.75 599847158654
-## 12:   Australia 2007 20434176   Oceania  81.235  34435.37 703658358894
-## 13: New Zealand 1952  1994794   Oceania  69.390  10556.58  21058193787
-## 14: New Zealand 1957  2229407   Oceania  70.260  12247.40  27304428858
-## 15: New Zealand 1962  2488550   Oceania  71.240  13175.68  32788333487
-## 16: New Zealand 1967  2728150   Oceania  71.520  14463.92  39459740429
-## 17: New Zealand 1972  2929100   Oceania  71.890  16046.04  47000447797
-## 18: New Zealand 1977  3164900   Oceania  72.220  16233.72  51378093149
-## 19: New Zealand 1982  3210650   Oceania  73.840  17632.41  56611498451
-## 20: New Zealand 1987  3317166   Oceania  74.320  19007.19  63050008703
-## 21: New Zealand 1992  3437674   Oceania  76.330  18363.32  63127124700
-## 22: New Zealand 1997  3676187   Oceania  77.550  21050.41  77385257446
-## 23: New Zealand 2002  3908037   Oceania  79.110  23189.80  90626601698
-## 24: New Zealand 2007  4115771   Oceania  80.204  25185.01 103655730130
-##         country year      pop continent lifeExp gdpPercap    total_gdp
-##        size
-##  1: 7692024
-##  2: 7692024
-##  3: 7692024
-##  4: 7692024
-##  5: 7692024
-##  6: 7692024
-##  7: 7692024
-##  8: 7692024
-##  9: 7692024
-## 10: 7692024
-## 11: 7692024
-## 12: 7692024
-## 13:  268021
-## 14:  268021
-## 15:  268021
-## 16:  268021
-## 17:  268021
-## 18:  268021
-## 19:  268021
-## 20:  268021
-## 21:  268021
-## 22:  268021
-## 23:  268021
-## 24:  268021
-##        size
+##         country year      pop continent lifeExp gdpPercap    size
+##  1:   Australia 1952  8691212   Oceania  69.120  10039.60 7692024
+##  2:   Australia 1957  9712569   Oceania  70.330  10949.65 7692024
+##  3:   Australia 1962 10794968   Oceania  70.930  12217.23 7692024
+##  4:   Australia 1967 11872264   Oceania  71.100  14526.12 7692024
+##  5:   Australia 1972 13177000   Oceania  71.930  16788.63 7692024
+##  6:   Australia 1977 14074100   Oceania  73.490  18334.20 7692024
+##  7:   Australia 1982 15184200   Oceania  74.740  19477.01 7692024
+##  8:   Australia 1987 16257249   Oceania  76.320  21888.89 7692024
+##  9:   Australia 1992 17481977   Oceania  77.560  23424.77 7692024
+## 10:   Australia 1997 18565243   Oceania  78.830  26997.94 7692024
+## 11:   Australia 2002 19546792   Oceania  80.370  30687.75 7692024
+## 12:   Australia 2007 20434176   Oceania  81.235  34435.37 7692024
+## 13: New Zealand 1952  1994794   Oceania  69.390  10556.58  268021
+## 14: New Zealand 1957  2229407   Oceania  70.260  12247.40  268021
+## 15: New Zealand 1962  2488550   Oceania  71.240  13175.68  268021
+## 16: New Zealand 1967  2728150   Oceania  71.520  14463.92  268021
+## 17: New Zealand 1972  2929100   Oceania  71.890  16046.04  268021
+## 18: New Zealand 1977  3164900   Oceania  72.220  16233.72  268021
+## 19: New Zealand 1982  3210650   Oceania  73.840  17632.41  268021
+## 20: New Zealand 1987  3317166   Oceania  74.320  19007.19  268021
+## 21: New Zealand 1992  3437674   Oceania  76.330  18363.32  268021
+## 22: New Zealand 1997  3676187   Oceania  77.550  21050.41  268021
+## 23: New Zealand 2002  3908037   Oceania  79.110  23189.80  268021
+## 24: New Zealand 2007  4115771   Oceania  80.204  25185.01  268021
+##         country year      pop continent lifeExp gdpPercap    size
 ```
 
 ```r
@@ -4767,18 +4766,6 @@ landSize[gap]
 ## 1702:    Zimbabwe   NA 1997 11404948    Africa  46.809  792.4500
 ## 1703:    Zimbabwe   NA 2002 11926563    Africa  39.989  672.0386
 ## 1704:    Zimbabwe   NA 2007 12311143    Africa  43.487  469.7093
-##        total_gdp
-##    1: 6567086330
-##    2: 7585448670
-##    3: 8758855797
-##    4: 9648014150
-##    5: 9678553274
-##   ---           
-## 1700: 6508240905
-## 1701: 7422611852
-## 1702: 9037850590
-## 1703: 8015110972
-## 1704: 5782658337
 ```
 
 To learn more about data table, you can check out the package Vignette on CRAN:
