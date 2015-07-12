@@ -187,37 +187,11 @@ gapLong &lt;-<span class="st"> </span><span class="kw">melt</span>(
 ## 5110:    Europe United Kingdom gdpPercap.2007   33203.261 gdpPercap 2007
 ## 5111:   Oceania      Australia gdpPercap.2007   34435.367 gdpPercap 2007
 ## 5112:   Oceania    New Zealand gdpPercap.2007   25185.009 gdpPercap 2007</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">gapLong</code></pre>
-<pre><code>##       continent        country       variable       value       var year
-##    1:    Africa        Algeria       pop.1952 9279525.000       pop 1952
-##    2:    Africa         Angola       pop.1952 4232095.000       pop 1952
-##    3:    Africa          Benin       pop.1952 1738315.000       pop 1952
-##    4:    Africa       Botswana       pop.1952  442308.000       pop 1952
-##    5:    Africa   Burkina Faso       pop.1952 4469979.000       pop 1952
-##   ---                                                                   
-## 5108:    Europe    Switzerland gdpPercap.2007   37506.419 gdpPercap 2007
-## 5109:    Europe         Turkey gdpPercap.2007    8458.276 gdpPercap 2007
-## 5110:    Europe United Kingdom gdpPercap.2007   33203.261 gdpPercap 2007
-## 5111:   Oceania      Australia gdpPercap.2007   34435.367 gdpPercap 2007
-## 5112:   Oceania    New Zealand gdpPercap.2007   25185.009 gdpPercap 2007</code></pre>
 <p>Let’s break this down.</p>
 <p>First, <code>colsplit(variable, &quot;\\.&quot;, c(&quot;var&quot;, &quot;year&quot;))</code> creates two columns called “var” and “year” from the “variable” column, splitting each value on the “.”. We need to specific the pattern as <code>\\.</code> because <code>.</code> by itself is a wild card character: it would match every character in the string.</p>
 <p>Next, we create two new columns in the <code>gapLong</code> data table using the <code>:=</code> operator. To create multiple columns, we specify their names in a vector to the left of the <code>:=</code> operator.</p>
 <p>Now that we’re happy this has worked, we can delete the old <code>variable</code> column:</p>
 <pre class="sourceCode r"><code class="sourceCode r">gapLong[,variable :<span class="er">=</span><span class="st"> </span><span class="ot">NULL</span>]</code></pre>
-<pre><code>##       continent        country       value       var year
-##    1:    Africa        Algeria 9279525.000       pop 1952
-##    2:    Africa         Angola 4232095.000       pop 1952
-##    3:    Africa          Benin 1738315.000       pop 1952
-##    4:    Africa       Botswana  442308.000       pop 1952
-##    5:    Africa   Burkina Faso 4469979.000       pop 1952
-##   ---                                                    
-## 5108:    Europe    Switzerland   37506.419 gdpPercap 2007
-## 5109:    Europe         Turkey    8458.276 gdpPercap 2007
-## 5110:    Europe United Kingdom   33203.261 gdpPercap 2007
-## 5111:   Oceania      Australia   34435.367 gdpPercap 2007
-## 5112:   Oceania    New Zealand   25185.009 gdpPercap 2007</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">gapLong</code></pre>
 <pre><code>##       continent        country       value       var year
 ##    1:    Africa        Algeria 9279525.000       pop 1952
 ##    2:    Africa         Angola 4232095.000       pop 1952
@@ -238,20 +212,7 @@ gapLong &lt;-<span class="st"> </span><span class="kw">melt</span>(
   <span class="dt">formula=</span>continent+country+year~var,
   <span class="co"># which column stores the values to be spread over the new columns</span>
   <span class="dt">value.var=</span><span class="st">&quot;value&quot;</span> 
-)
-gapLong</code></pre>
-<pre><code>##       continent     country year gdpPercap lifeExp      pop
-##    1:    Africa     Algeria 1952  2449.008  43.077  9279525
-##    2:    Africa     Algeria 1957  3013.976  45.685 10270856
-##    3:    Africa     Algeria 1962  2550.817  48.303 11000948
-##    4:    Africa     Algeria 1967  3246.992  51.407 12760499
-##    5:    Africa     Algeria 1972  4182.664  54.518 14760787
-##   ---                                                      
-## 1700:   Oceania New Zealand 1987 19007.191  74.320  3317166
-## 1701:   Oceania New Zealand 1992 18363.325  76.330  3437674
-## 1702:   Oceania New Zealand 1997 21050.414  77.550  3676187
-## 1703:   Oceania New Zealand 2002 23189.801  79.110  3908037
-## 1704:   Oceania New Zealand 2007 25185.009  80.204  4115771</code></pre>
+)</code></pre>
 <p>And now we’re back where we’ve started with the long data!</p>
 <p>We’ve shown you the simplest cases for reshaping data. More complex cases may require you to <code>melt</code> or <code>dcast</code> in several steps, and <code>rbind</code> the results.</p>
 <p>Other packages you may find useful for this task are <a href="http://cran.r-project.org/web/packages/tidyr/index.html">tidyr</a> and <a href="http://cran.r-project.org/web/packages/splitstackshape/index.html">splitstackshape</a></p>

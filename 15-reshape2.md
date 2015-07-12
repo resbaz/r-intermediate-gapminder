@@ -215,25 +215,6 @@ gapLong[, c("var", "year") := colsplit(variable, "\\.", c("var", "year"))]
 ## 5112:   Oceania    New Zealand gdpPercap.2007   25185.009 gdpPercap 2007
 ```
 
-```r
-gapLong
-```
-
-```
-##       continent        country       variable       value       var year
-##    1:    Africa        Algeria       pop.1952 9279525.000       pop 1952
-##    2:    Africa         Angola       pop.1952 4232095.000       pop 1952
-##    3:    Africa          Benin       pop.1952 1738315.000       pop 1952
-##    4:    Africa       Botswana       pop.1952  442308.000       pop 1952
-##    5:    Africa   Burkina Faso       pop.1952 4469979.000       pop 1952
-##   ---                                                                   
-## 5108:    Europe    Switzerland gdpPercap.2007   37506.419 gdpPercap 2007
-## 5109:    Europe         Turkey gdpPercap.2007    8458.276 gdpPercap 2007
-## 5110:    Europe United Kingdom gdpPercap.2007   33203.261 gdpPercap 2007
-## 5111:   Oceania      Australia gdpPercap.2007   34435.367 gdpPercap 2007
-## 5112:   Oceania    New Zealand gdpPercap.2007   25185.009 gdpPercap 2007
-```
-
 Let's break this down.
 
 First, `colsplit(variable, "\\.", c("var", "year"))` creates two columns called 
@@ -267,25 +248,6 @@ gapLong[,variable := NULL]
 ## 5112:   Oceania    New Zealand   25185.009 gdpPercap 2007
 ```
 
-```r
-gapLong
-```
-
-```
-##       continent        country       value       var year
-##    1:    Africa        Algeria 9279525.000       pop 1952
-##    2:    Africa         Angola 4232095.000       pop 1952
-##    3:    Africa          Benin 1738315.000       pop 1952
-##    4:    Africa       Botswana  442308.000       pop 1952
-##    5:    Africa   Burkina Faso 4469979.000       pop 1952
-##   ---                                                    
-## 5108:    Europe    Switzerland   37506.419 gdpPercap 2007
-## 5109:    Europe         Turkey    8458.276 gdpPercap 2007
-## 5110:    Europe United Kingdom   33203.261 gdpPercap 2007
-## 5111:   Oceania      Australia   34435.367 gdpPercap 2007
-## 5112:   Oceania    New Zealand   25185.009 gdpPercap 2007
-```
-
 Finally, to split out the `value` column into the groups stored in `var`, we use
 the `dcast` function. Since we'd like to keep the result as a data table, we'll
 explicitly call the method from the `data.table` package:
@@ -300,22 +262,6 @@ gapLong <- dcast.data.table(
   # which column stores the values to be spread over the new columns
   value.var="value" 
 )
-gapLong
-```
-
-```
-##       continent     country year gdpPercap lifeExp      pop
-##    1:    Africa     Algeria 1952  2449.008  43.077  9279525
-##    2:    Africa     Algeria 1957  3013.976  45.685 10270856
-##    3:    Africa     Algeria 1962  2550.817  48.303 11000948
-##    4:    Africa     Algeria 1967  3246.992  51.407 12760499
-##    5:    Africa     Algeria 1972  4182.664  54.518 14760787
-##   ---                                                      
-## 1700:   Oceania New Zealand 1987 19007.191  74.320  3317166
-## 1701:   Oceania New Zealand 1992 18363.325  76.330  3437674
-## 1702:   Oceania New Zealand 1997 21050.414  77.550  3676187
-## 1703:   Oceania New Zealand 2002 23189.801  79.110  3908037
-## 1704:   Oceania New Zealand 2007 25185.009  80.204  4115771
 ```
 
 And now we're back where we've started with the long data!

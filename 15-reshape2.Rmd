@@ -71,7 +71,6 @@ variable type and year:
 
 ```{r}
 gapLong[, c("var", "year") := colsplit(variable, "\\.", c("var", "year"))]
-gapLong
 ```
 
 Let's break this down.
@@ -89,7 +88,6 @@ Now that we're happy this has worked, we can delete the old `variable` column:
 
 ```{r}
 gapLong[,variable := NULL]
-gapLong
 ```
 
 Finally, to split out the `value` column into the groups stored in `var`, we use
@@ -105,7 +103,6 @@ gapLong <- dcast.data.table(
   # which column stores the values to be spread over the new columns
   value.var="value" 
 )
-gapLong
 ```
 
 And now we're back where we've started with the long data!
