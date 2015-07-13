@@ -1,0 +1,65 @@
+---
+layout: page
+title: IntermediateR for reproducible scientific analysis
+subtitle: parallel progamming
+minutes: 20
+---
+
+> ## Learning objectives {.objectives}
+>
+> * To understand the concept of "embarassingly parallel" problems
+> * To be able to set up a parallel backend for R
+> * To be able to effectively parallelise for loops using the foreach package
+> * To be able to assess the overall runtime of a piece of code in R.
+>
+
+Some problems encountered in scientific research fall into the category known as
+"embarrasingly parallel": analyses which require a very large number of 
+calculations, but whose calculations do not depend on each other. A classic 
+example of this comes from genetics: Genome-wide association studies involve the
+testing of hundreds of thousands of genetic variants across the genome for 
+an association with a disease or trait. Each genetic variant can be tested 
+independently, that is, the calculation of their association does not require
+the results of any of the other tests.
+
+In this lesson we're going to learn how to parallelise this kind of task over
+multiple cores on your computer, and the pitfalls to avoid.
+
+### Registering a parallel backend
+
+First, we need to tell R how many cores to use for any parallel calculation. For
+this lesson we will tell R to use one less core than the total number of cores
+on our machine: this leaves one processor free for other tasks while calculations
+happen in the background:
+
+```{r}
+library(doParallel)
+cl <- makeCluster(detectCores()-1)
+registerDoParallel(cl)
+```
+
+> #### How many cores should I use? {.callout}
+>
+> In practice you should never register more cores with R than 
+> you have on your computer, otherwise the parallel calculations might cause your
+> computer to "thrash": grind to a halt and run extremely slowly. Note even the
+> parallel calculations will run extremely slowly, so this offers no advantage.
+>
+> The `detectCores` function will tell you how many cores you can safely 
+> parallelise over:
+>
+> ```{r}
+> library(parallel)
+> detectCores()
+> ```
+>
+
+### Parallel for loops
+
+
+### Efficient parallelisation
+
+
+
+
+
