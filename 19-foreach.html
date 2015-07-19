@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: IntermediateR for reproducible scientific analysis</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">IntermediateR for reproducible scientific analysis</h1></a>
+          <h2 class="subtitle">parallel progamming</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-certificate"></span>Learning objectives</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>To understand the concept of “embarassingly parallel” problems</li>
+<li>To be able to set up a parallel backend for R</li>
+<li>To be able to effectively parallelise for loops using the foreach package</li>
+<li>To be able to assess the overall runtime of a piece of code in R.</li>
+</ul>
+</div>
+</section>
+<p>Some problems encountered in scientific research fall into the category known as “embarrasingly parallel”: analyses which require a very large number of calculations, but whose calculations do not depend on each other. A classic example of this comes from genetics: Genome-wide association studies involve the testing of hundreds of thousands of genetic variants across the genome for an association with a disease or trait. Each genetic variant can be tested independently, that is, the calculation of their association does not require the results of any of the other tests.</p>
+<p>In this lesson we’re going to learn how to parallelise this kind of task over multiple cores on your computer, and the pitfalls to avoid.</p>
+<h3 id="registering-a-parallel-backend">Registering a parallel backend</h3>
+<p>First, we need to tell R how many cores to use for any parallel calculation. For this lesson we will tell R to use one less core than the total number of cores on our machine: this leaves one processor free for other tasks while calculations happen in the background:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(doParallel)</code></pre>
+<pre><code>## Loading required package: foreach
+## Loading required package: iterators
+## Loading required package: parallel</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">cl &lt;-<span class="st"> </span><span class="kw">makeCluster</span>(<span class="dv">2</span>)
+<span class="kw">registerDoParallel</span>(cl)</code></pre>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h4><span class="glyphicon glyphicon-pushpin"></span>How many cores?</h4>
+</div>
+<div class="panel-body">
+<p>In practice you should never register more cores with R than you have on your computer, otherwise the parallel calculations might cause your computer to “thrash”: grind to a halt and run extremely slowly. Note even the parallel calculations will run extremely slowly, so this offers no advantage.</p>
+<p>The <code>detectCores</code> function will tell you how many cores you can safely parallelise over:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(parallel)
+<span class="kw">detectCores</span>()</code></pre>
+<pre><code>## [1] 8</code></pre>
+</div>
+</aside>
+<h3 id="parallel-for-loops">Parallel for loops</h3>
+<p>There are several components to a parallel for loop. Let’s learn through an example:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load in the parallel for loop library</span>
+<span class="kw">library</span>(foreach)
+<span class="co"># Get a list of countries</span>
+countries &lt;-<span class="st"> </span><span class="kw">unique</span>(gap$country)
+<span class="co"># Calculate the change in life expectancy over the last 55 years for each country</span>
+diffLifeExp &lt;-<span class="st"> </span><span class="kw">foreach</span>(<span class="dt">cc =</span> countries, <span class="dt">.combine=</span>rbind, <span class="dt">.packages=</span><span class="st">&quot;data.table&quot;</span>) %dopar%<span class="st"> </span>{
+  diffLE &lt;-<span class="st"> </span>gap[country ==<span class="st"> </span>cc, <span class="kw">max</span>(lifeExp) -<span class="st"> </span><span class="kw">min</span>(lifeExp)]
+  <span class="kw">data.table</span>(
+    <span class="dt">country=</span>cc,
+    <span class="dt">diffLifeExp=</span>diffLE
+  )
+}
+diffLifeExp</code></pre>
+<pre><code>##                 country diffLifeExp
+##   1:        Afghanistan      15.027
+##   2:            Albania      21.193
+##   3:            Algeria      29.224
+##   4:             Angola      12.716
+##   5:          Argentina      12.835
+##  ---                               
+## 138:            Vietnam      33.837
+## 139: West Bank and Gaza      30.262
+## 140:         Yemen Rep.      30.150
+## 141:             Zambia      12.628
+## 142:           Zimbabwe      22.362</code></pre>
+<p>Here, we use the <code>foreach</code> function instead of a <code>for</code> loop. The <code>%dopar%</code> operator immediately after the <code>foreach()</code> function tells <code>foreach</code> to run its calculations (i.e. the body of the foreach loop) independently across multiple cores.</p>
+<p>If we are parallelising over 4 cores, the calculations for the first four countries will run in parallel: the change in life expectancy will be calculated for Afghanistan, Albania, Algeria, and Angola at the same time, these results will be returned, then the next four countries will be calculated, and so on.</p>
+<p>Just like the <code>apply</code> family of functions, the results of the last line in the body of the foreach loop will be returned and combined by <code>foreach</code>. The default is to combine the results into a <code>list</code>, just like <code>lapply</code>. However, we can specify a different function to combine our results with using the <code>.combine</code> argument. Here we have told <code>foreach</code> to use the <code>rbind</code> function, so that each result becomes a row in a new <code>data.table</code>.</p>
+<p>Finally, we use the <code>.packages</code> argument to tell <code>foreach</code> which packages it needs for the calculations in the body of the <code>foreach</code> loop. The parallel calculations happen in independent R sessions, so each of these R sessions needs to be aware of the packages it needs to run the calculations.</p>
+<h3 id="efficient-parallelisation-and-communication-overhead">Efficient parallelisation and communication overhead</h3>
+<p>Parallelisation doesn’t come for free: there is a communication overhead in sending objects to and receiving objects from each parallel core.</p>
+<p>In the following examples, we will calculate the mean global life expectancy in each year, and use <code>system.time</code> to examine the total runtime of the code.</p>
+<pre class="sourceCode r"><code class="sourceCode r">years &lt;-<span class="st"> </span><span class="kw">unique</span>(gap$year)
+runtime1 &lt;-<span class="st"> </span><span class="kw">system.time</span>({
+  meanLifeExp &lt;-<span class="st"> </span><span class="kw">foreach</span>(
+    <span class="dt">yy =</span> years, 
+    <span class="dt">.packages=</span><span class="st">&quot;data.table&quot;</span>
+   ) %dopar%<span class="st"> </span>{
+    <span class="kw">mean</span>(gap[year ==<span class="st"> </span>yy, lifeExp])
+  }
+})
+runtime1</code></pre>
+<pre><code>##    user  system elapsed 
+##   0.010   0.001   0.020</code></pre>
+<p>The <code>system.time</code> function takes an some R code (wrapped in curly braces, <code>{</code>, <code>}</code>), runs it, then returns the total time taken by the code to run. In this case we care about the “elapsed” field: this gives the “real” time taken by the computer to run the code. The “user” and “system” fields provide information about CPU time taken by various levels of the operating system, see <code>help(&quot;proc.time&quot;)</code>.</p>
+<p>This was actually a very inefficient way to parallelise our code. Since there are 12 different <code>years</code>, the code is sending out the calculations for 1952 and 1957 to the two cores, collecting the results, then sending out 1962 and 1967 and so on.</p>
+<p>It is much more effective to break the problem into “chunks”: one for each parallel core. The <code>itertools</code> package provides useful functions that integrate with <code>foreach</code> for solving this. Here we’ll use <code>isplitVector</code> to split <code>years</code> into two chunks, then on each parallel core, use a non-parallelised (serial) <code>foreach</code> loop to run the calculations for each year. Note we need to tell each parallel core about the <code>foreach</code> package. We’ll also use the <code>getDoParWorkers</code> function to automatically detect how many cores we have registered. This means you can return with a different number of cores later without having to update values throughout your code:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(itertools)
+runtime2 &lt;-<span class="st"> </span><span class="kw">system.time</span>({
+  meanLifeExp &lt;-<span class="st"> </span><span class="kw">foreach</span>(
+      <span class="dt">chunk =</span> <span class="kw">isplitVector</span>(years, <span class="dt">chunks=</span><span class="kw">getDoParWorkers</span>()), 
+      <span class="dt">.packages=</span><span class="kw">c</span>(<span class="st">&quot;foreach&quot;</span>, <span class="st">&quot;data.table&quot;</span>)
+  ) %dopar%<span class="st"> </span>{
+    <span class="kw">foreach</span>(<span class="dt">yy =</span> chunk, <span class="dt">.combine=</span>rbind) %do%<span class="st"> </span>{
+      <span class="kw">mean</span>(gap[year ==<span class="st"> </span>yy, lifeExp])
+    }
+  }
+})
+runtime2</code></pre>
+<pre><code>##    user  system elapsed 
+##   0.008   0.000   0.059</code></pre>
+<p>Suprisingly this code was much slower! So what happened? In this case the overhead of setting up the parallel code efficiently outweighed the benefits. Since we’re working with a toy dataset, the actual calculations are very, very, fast. In comparison to our first example, we’ve now added the <code>foreach</code> package, which gets loaded in each new R session, as well as the chunking of tasks through <code>isplitVector</code>. Together, these take longer than the actual calculations!</p>
+<p>For example we run the code not in parallel using <code>sapply</code> we see the fastest overall time:</p>
+<pre class="sourceCode r"><code class="sourceCode r">runtime3 &lt;-<span class="st"> </span><span class="kw">system.time</span>({
+  meanLifeExp &lt;-<span class="st"> </span><span class="kw">sapply</span>(years, function(yy) {
+    <span class="kw">mean</span>(gap[year ==<span class="st"> </span>yy, lifeExp])
+  })
+})
+runtime3</code></pre>
+<pre><code>##    user  system elapsed 
+##   0.013   0.000   0.013</code></pre>
+<p>Finally, an important consideration when parallelising code is deciding how many cores is the most effective for the task at hand. With too many cores the chunks can become small enough that the communication and setup overhead outweighs the benefit.</p>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>
