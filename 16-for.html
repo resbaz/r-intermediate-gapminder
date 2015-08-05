@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: IntermediateR for reproducible scientific analysis</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">IntermediateR for reproducible scientific analysis</h1></a>
+          <h2 class="subtitle">For loops</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-certificate"></span>Learning objectives</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>Write and understand <code>for</code> loops.</li>
+</ul>
+</div>
+</section>
+<h3 id="repeating-operations">Repeating operations</h3>
+<p>Often when we’re trying to solve a problem or run some analysis we find ourselves doing the same thing over, and over, and over again on different groupings of data, or on different files, or with slight parameter variations.</p>
+<p>The great thing about R, and programming in general, is it allows us to be <strong>lazy</strong>. Why do a repetitive task if you can make the computer do it for you?</p>
+<p>For example, lets say I wanted to calculated the total population for each continent in the gapminder dataset in 2007. We could do this in several ways, but the most basic approach is manually:</p>
+<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Asia&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre>
+<pre class="output"><code>[1] 3811953827
+</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Africa&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre>
+<pre class="output"><code>[1] 929539692
+</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Americas&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre>
+<pre class="output"><code>[1] 898871184
+</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Europe&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre>
+<pre class="output"><code>[1] 586098529
+</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Oceania&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre>
+<pre class="output"><code>[1] 24549947
+</code></pre>
+<p>This is tedious to type out. We can do it, but imagine if we wanted to run some calculation for each country!</p>
+<p>The clever way to do this would be to use our recently acquired data.table skills:</p>
+<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span>, <span class="kw">sum</span>(pop), by=continent]</code></pre>
+<pre class="output"><code>   continent         V1
+1:      Asia 3811953827
+2:    Europe  586098529
+3:    Africa  929539692
+4:  Americas  898871184
+5:   Oceania   24549947
+</code></pre>
+<p>But sometimes the solution to a problem isn’t obvious, or doesn’t fit into a format we’re used to, so it’s helpful to have multiple tools in our problem-solving toolbox to fall back on.</p>
+<p>With a for loop we can instead <em>iterate</em> over each continent, and tell R to run the same command:</p>
+<pre class="sourceCode r"><code class="sourceCode r">for (cc in gap[,<span class="kw">unique</span>(continent)]) {
+  popsum &lt;-<span class="st"> </span>gap[year ==<span class="st"> </span>yy &amp;<span class="st"> </span>continent ==<span class="st"> </span>cc, <span class="kw">sum</span>(pop)]
+  <span class="kw">print</span>(<span class="kw">paste</span>(cc, <span class="st">&quot;:&quot;</span>, popsum))
+}</code></pre>
+<pre class="output"><code>Error in eval(expr, envir, enclos): object &#39;yy&#39; not found
+</code></pre>
+<p>This construct tells R to go through each thing on the right of the <code>in</code> operator and store it in the variable <code>cc</code>. Inside the <em>body</em> of the <code>for</code> loop, i.e. any lines of code that fall between the curly braces (<code>{</code> and <code>}</code>), we can then access the value of <code>cc</code> to do whatever we like. So first, <code>cc</code> will hold the value “Asia”, then it will run the line of code, and return back to the top of the loop. Next <code>cc</code> will hold the value “Europe”, and do the same thing, and so on.</p>
+<p>What if we want to look at the change in total population for each continent over the years? We can “nest” for loops to iterate through multiple separate conditions:</p>
+<pre class="sourceCode r"><code class="sourceCode r">for (cc in gap[,<span class="kw">unique</span>(continent)]) {
+  for (yy in gap[,<span class="kw">unique</span>(year)]) {
+    popsum &lt;-<span class="st"> </span>gap[year ==<span class="st"> </span>yy &amp;<span class="st"> </span>continent ==<span class="st"> </span>cc, <span class="kw">sum</span>(pop)]
+    <span class="kw">print</span>(<span class="kw">paste</span>(cc, yy, <span class="st">&quot;:&quot;</span>, popsum))
+  }
+}</code></pre>
+<pre class="output"><code>[1] &quot;Asia 1952 : 1395357351.99999&quot;
+[1] &quot;Asia 1957 : 1562780599&quot;
+[1] &quot;Asia 1962 : 1696357182&quot;
+[1] &quot;Asia 1967 : 1905662900&quot;
+[1] &quot;Asia 1972 : 2150972248&quot;
+[1] &quot;Asia 1977 : 2384513556&quot;
+[1] &quot;Asia 1982 : 2610135582&quot;
+[1] &quot;Asia 1987 : 2871220762&quot;
+[1] &quot;Asia 1992 : 3133292191&quot;
+[1] &quot;Asia 1997 : 3383285500&quot;
+[1] &quot;Asia 2002 : 3601802203&quot;
+[1] &quot;Asia 2007 : 3811953827&quot;
+[1] &quot;Europe 1952 : 418120846&quot;
+[1] &quot;Europe 1957 : 437890351&quot;
+[1] &quot;Europe 1962 : 460355155&quot;
+[1] &quot;Europe 1967 : 481178958&quot;
+[1] &quot;Europe 1972 : 500635059&quot;
+[1] &quot;Europe 1977 : 517164531&quot;
+[1] &quot;Europe 1982 : 531266901&quot;
+[1] &quot;Europe 1987 : 543094160&quot;
+[1] &quot;Europe 1992 : 558142797&quot;
+[1] &quot;Europe 1997 : 568944148&quot;
+[1] &quot;Europe 2002 : 578223869&quot;
+[1] &quot;Europe 2007 : 586098529&quot;
+[1] &quot;Africa 1952 : 237640501&quot;
+[1] &quot;Africa 1957 : 264837738&quot;
+[1] &quot;Africa 1962 : 296516865&quot;
+[1] &quot;Africa 1967 : 335289489&quot;
+[1] &quot;Africa 1972 : 379879541&quot;
+[1] &quot;Africa 1977 : 433061021&quot;
+[1] &quot;Africa 1982 : 499348587&quot;
+[1] &quot;Africa 1987 : 574834110&quot;
+[1] &quot;Africa 1992 : 659081517&quot;
+[1] &quot;Africa 1997 : 743832984&quot;
+[1] &quot;Africa 2002 : 833723916&quot;
+[1] &quot;Africa 2007 : 929539692&quot;
+[1] &quot;Americas 1952 : 345152446&quot;
+[1] &quot;Americas 1957 : 386953916&quot;
+[1] &quot;Americas 1962 : 433270254&quot;
+[1] &quot;Americas 1967 : 480746623&quot;
+[1] &quot;Americas 1972 : 529384210&quot;
+[1] &quot;Americas 1977 : 578067699&quot;
+[1] &quot;Americas 1982 : 630290920&quot;
+[1] &quot;Americas 1987 : 682753971&quot;
+[1] &quot;Americas 1992 : 739274104&quot;
+[1] &quot;Americas 1997 : 796900410&quot;
+[1] &quot;Americas 2002 : 849772762&quot;
+[1] &quot;Americas 2007 : 898871184&quot;
+[1] &quot;Oceania 1952 : 10686006&quot;
+[1] &quot;Oceania 1957 : 11941976&quot;
+[1] &quot;Oceania 1962 : 13283518&quot;
+[1] &quot;Oceania 1967 : 14600414&quot;
+[1] &quot;Oceania 1972 : 16106100&quot;
+[1] &quot;Oceania 1977 : 17239000&quot;
+[1] &quot;Oceania 1982 : 18394850&quot;
+[1] &quot;Oceania 1987 : 19574415&quot;
+[1] &quot;Oceania 1992 : 20919651&quot;
+[1] &quot;Oceania 1997 : 22241430&quot;
+[1] &quot;Oceania 2002 : 23454829&quot;
+[1] &quot;Oceania 2007 : 24549947&quot;
+</code></pre>
+<h4 id="for-or-apply-the-second-circle-of-hell.">For or Apply? The second circle of hell.</h4>
+<blockquote>
+<p>We made our way into the second Circle, here live the gluttons. – <a href="http://www.burns-stat.com/pages/Tutor/R_inferno.pdf">The R inferno</a></p>
+</blockquote>
+<p>One of the biggest things that trips up novices and experienced R users alike, is building a results object (vector, list, matrix, data frame) as your for loop progresses. For example:</p>
+<pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">continent=</span><span class="kw">character</span>(), <span class="dt">year=</span><span class="kw">numeric</span>(), <span class="dt">popsum=</span><span class="kw">numeric</span>())
+for (cc in gap[,<span class="kw">unique</span>(continent)]) {
+  for (yy in gap[,<span class="kw">unique</span>(year)]) {
+    popsum &lt;-<span class="st"> </span>gap[year ==<span class="st"> </span>yy &amp;<span class="st"> </span>continent ==<span class="st"> </span>cc, <span class="kw">sum</span>(pop)]
+    this_result &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">continent=</span>cc, <span class="dt">year=</span>yy, <span class="dt">popsum=</span>popsum)
+    results &lt;-<span class="st"> </span><span class="kw">rbind</span>(results, this_result)
+  }
+}
+results</code></pre>
+<pre class="output"><code>   continent year     popsum
+1       Asia 1952 1395357352
+2       Asia 1957 1562780599
+3       Asia 1962 1696357182
+4       Asia 1967 1905662900
+5       Asia 1972 2150972248
+6       Asia 1977 2384513556
+7       Asia 1982 2610135582
+8       Asia 1987 2871220762
+9       Asia 1992 3133292191
+10      Asia 1997 3383285500
+11      Asia 2002 3601802203
+12      Asia 2007 3811953827
+13    Europe 1952  418120846
+14    Europe 1957  437890351
+15    Europe 1962  460355155
+16    Europe 1967  481178958
+17    Europe 1972  500635059
+18    Europe 1977  517164531
+19    Europe 1982  531266901
+20    Europe 1987  543094160
+21    Europe 1992  558142797
+22    Europe 1997  568944148
+23    Europe 2002  578223869
+24    Europe 2007  586098529
+25    Africa 1952  237640501
+26    Africa 1957  264837738
+27    Africa 1962  296516865
+28    Africa 1967  335289489
+29    Africa 1972  379879541
+30    Africa 1977  433061021
+31    Africa 1982  499348587
+32    Africa 1987  574834110
+33    Africa 1992  659081517
+34    Africa 1997  743832984
+35    Africa 2002  833723916
+36    Africa 2007  929539692
+37  Americas 1952  345152446
+38  Americas 1957  386953916
+39  Americas 1962  433270254
+40  Americas 1967  480746623
+41  Americas 1972  529384210
+42  Americas 1977  578067699
+43  Americas 1982  630290920
+44  Americas 1987  682753971
+45  Americas 1992  739274104
+46  Americas 1997  796900410
+47  Americas 2002  849772762
+48  Americas 2007  898871184
+49   Oceania 1952   10686006
+50   Oceania 1957   11941976
+51   Oceania 1962   13283518
+52   Oceania 1967   14600414
+53   Oceania 1972   16106100
+54   Oceania 1977   17239000
+55   Oceania 1982   18394850
+56   Oceania 1987   19574415
+57   Oceania 1992   20919651
+58   Oceania 1997   22241430
+59   Oceania 2002   23454829
+60   Oceania 2007   24549947
+</code></pre>
+<p>“Growing” a results object like this is bad practice. At each iteration, R needs to talk to the computer’s operating system to ask for the right amount of memory for your new results object. Like all diplomatic negotiations, this can take a while (at least in computer time!). As a result, you might find that your for loops seem to take forever when you start working with bigger datasets or more complex calculations.</p>
+<p>It’s much better to tell R how big your results object will be up front, that way R only needs to ask the computer for the right amount of memory once:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># First lets calculate the number of rows we need:</span>
+nresults &lt;-<span class="st"> </span>gap[,<span class="kw">length</span>(<span class="kw">unique</span>(continent))] *<span class="st"> </span>gap[,<span class="kw">length</span>(<span class="kw">unique</span>(year))] 
+results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">continent=</span><span class="kw">character</span>(<span class="dt">length=</span>nresults), 
+  <span class="dt">year=</span><span class="kw">numeric</span>(<span class="dt">length=</span>nresults), 
+  <span class="dt">popsum=</span><span class="kw">numeric</span>(<span class="dt">length=</span>nresults)
+)
+<span class="co"># Instead of iterating over values, we need to keep track of indices so we know</span>
+<span class="co"># which row to insert or new results into at each iteration. </span>
+<span class="co"># `seq_along` will create a sequence of numbers based on the length of the </span>
+<span class="co"># vector. So instead of c(&quot;Asia&quot;, &quot;Americas&quot;, &quot;Europe&quot;, &quot;Africa&quot;, &quot;Oceania&quot;),</span>
+<span class="co"># ii will store c(1,2,3,4,5)</span>
+continents &lt;-<span class="st"> </span>gap[,<span class="kw">unique</span>(continent)]
+years &lt;-<span class="st"> </span>gap[,<span class="kw">unique</span>(year)]
+<span class="co"># We also need to keep track of which row to insert into. We could do fancy </span>
+<span class="co"># math based on our indices, but this is hard to get right and can lead to hard</span>
+<span class="co"># to detect errors. Its much easier to just keep track of this manually. </span>
+this_row &lt;-<span class="st"> </span><span class="dv">1</span>
+for (ii in <span class="kw">seq_along</span>(continents)) {
+  for (jj in <span class="kw">seq_along</span>(years)) {
+    <span class="co"># Now we need to look-up the appopriate values based on our indices</span>
+    cc &lt;-<span class="st"> </span>continents[ii]
+    yy &lt;-<span class="st"> </span>years[jj]
+    popsum &lt;-<span class="st"> </span>gap[year ==<span class="st"> </span>yy &amp;<span class="st"> </span>continent ==<span class="st"> </span>cc, <span class="kw">sum</span>(pop)]
+    results[this_row,] &lt;-<span class="st"> </span><span class="kw">list</span>(cc, yy, popsum)
+    <span class="co"># Increment the row counter</span>
+    this_row &lt;-<span class="st"> </span>this_row +<span class="st"> </span><span class="dv">1</span>
+  }
+}
+results</code></pre>
+<pre class="output"><code>   continent year     popsum
+1       Asia 1952 1395357352
+2       Asia 1957 1562780599
+3       Asia 1962 1696357182
+4       Asia 1967 1905662900
+5       Asia 1972 2150972248
+6       Asia 1977 2384513556
+7       Asia 1982 2610135582
+8       Asia 1987 2871220762
+9       Asia 1992 3133292191
+10      Asia 1997 3383285500
+11      Asia 2002 3601802203
+12      Asia 2007 3811953827
+13    Europe 1952  418120846
+14    Europe 1957  437890351
+15    Europe 1962  460355155
+16    Europe 1967  481178958
+17    Europe 1972  500635059
+18    Europe 1977  517164531
+19    Europe 1982  531266901
+20    Europe 1987  543094160
+21    Europe 1992  558142797
+22    Europe 1997  568944148
+23    Europe 2002  578223869
+24    Europe 2007  586098529
+25    Africa 1952  237640501
+26    Africa 1957  264837738
+27    Africa 1962  296516865
+28    Africa 1967  335289489
+29    Africa 1972  379879541
+30    Africa 1977  433061021
+31    Africa 1982  499348587
+32    Africa 1987  574834110
+33    Africa 1992  659081517
+34    Africa 1997  743832984
+35    Africa 2002  833723916
+36    Africa 2007  929539692
+37  Americas 1952  345152446
+38  Americas 1957  386953916
+39  Americas 1962  433270254
+40  Americas 1967  480746623
+41  Americas 1972  529384210
+42  Americas 1977  578067699
+43  Americas 1982  630290920
+44  Americas 1987  682753971
+45  Americas 1992  739274104
+46  Americas 1997  796900410
+47  Americas 2002  849772762
+48  Americas 2007  898871184
+49   Oceania 1952   10686006
+50   Oceania 1957   11941976
+51   Oceania 1962   13283518
+52   Oceania 1967   14600414
+53   Oceania 1972   16106100
+54   Oceania 1977   17239000
+55   Oceania 1982   18394850
+56   Oceania 1987   19574415
+57   Oceania 1992   20919651
+58   Oceania 1997   22241430
+59   Oceania 2002   23454829
+60   Oceania 2007   24549947
+</code></pre>
+<p>As you can see, this involves a lot more work. Most R users will even go so far to tell you that for loops are bad, and that you should use something called <code>apply</code> instead! We’ll cover this in the next lesson, and later we’ll show you another method, <code>foreach</code> which also handles object creation for you.</p>
+<p>For loops are most useful when you’re performing a series of calculations where each iteration depends on the results of the last (for example a random walk).</p>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h4><span class="glyphicon glyphicon-pushpin"></span>Tip: While loops</h4>
+</div>
+<div class="panel-body">
+<p>Sometimes you will find yourself needing to repeat an operation until a certain condition is met. You can do this with a <code>while</code> loop.</p>
+<pre class="sourceCode r"><code class="sourceCode r">while(this condition is true){
+  do a thing
+}</code></pre>
+<p>As an example, here’s a while loop that generates random numbers from a uniform distribution (the <code>runif</code> function) between 0 and 1 until it gets one that’s less than 0.1.</p>
+<pre class="sourceCode r"><code class="sourceCode r">z &lt;-<span class="st"> </span><span class="dv">1</span>
+while(z &gt;<span class="st"> </span><span class="fl">0.1</span>){
+  z &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)
+  <span class="kw">print</span>(z)
+}</code></pre>
+<p><code>while</code> loops will not always be appropriate. You have to be particularly careful that you don’t end up in an infinite loop because your condition is never met.</p>
+</div>
+</aside>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
+</div>
+<div class="panel-body">
+<p>Write a script that loops through the <code>gapminder</code> data by continent and prints out the mean life expectancy in 1952.</p>
+</div>
+</section>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4><span class="glyphicon glyphicon-pencil"></span>Challenge 3</h4>
+</div>
+<div class="panel-body">
+<p>Modify the script so that it loops through the years as well as the continents.</p>
+</div>
+</section>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4><span class="glyphicon glyphicon-pencil"></span>Challenge 4</h4>
+</div>
+<div class="panel-body">
+<p>Write a for loop that performs a random walk for 100 steps, then plot the result.</p>
+<p>Hint: You can use <code>sign(rnorm(1))</code> in the body of the loop to randomly choose a direction (forward or backward) at each iteration.</p>
+<p>Hint: You will want to store the resulting position (starting at 0) after each iteration for plotting purposes.</p>
+<p>Hint: give the <code>plot</code> function the indices 0:100 as the x axis, and the stored positions as the y axis. specify the ‘type’ argument as “l” to draw a the path.</p>
+</div>
+</section>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>

@@ -5,11 +5,7 @@ subtitle: For loops
 minutes: 20
 ---
 
-```{r, include=FALSE}
-source("tools/chunk-options.R")
-library("data.table")
-gap <- fread("data/gapminder-FiveYearData.csv")
-```
+
 > ## Learning objectives {.objectives}
 >
 > * Write and understand `for` loops.
@@ -28,13 +24,69 @@ For example, lets say I wanted to calculated the total population for each
 continent in the gapminder dataset in 2007. We could do this in several ways,
 but the most basic approach is manually:
 
-```{r}
+
+~~~{.r}
 gap[year == 2007 & continent == "Asia", sum(pop)]
+~~~
+
+
+
+~~~{.output}
+[1] 3811953827
+
+~~~
+
+
+
+~~~{.r}
 gap[year == 2007 & continent == "Africa", sum(pop)]
+~~~
+
+
+
+~~~{.output}
+[1] 929539692
+
+~~~
+
+
+
+~~~{.r}
 gap[year == 2007 & continent == "Americas", sum(pop)]
+~~~
+
+
+
+~~~{.output}
+[1] 898871184
+
+~~~
+
+
+
+~~~{.r}
 gap[year == 2007 & continent == "Europe", sum(pop)]
+~~~
+
+
+
+~~~{.output}
+[1] 586098529
+
+~~~
+
+
+
+~~~{.r}
 gap[year == 2007 & continent == "Oceania", sum(pop)]
-```
+~~~
+
+
+
+~~~{.output}
+[1] 24549947
+
+~~~
 
 This is tedious to type out. We can do it, but imagine if we wanted
 to run some calculation for each country!
@@ -42,9 +94,22 @@ to run some calculation for each country!
 The clever way to do this would be to use our recently acquired data.table 
 skills:
 
-```{r}
+
+~~~{.r}
 gap[year == 2007, sum(pop), by=continent]
-```
+~~~
+
+
+
+~~~{.output}
+   continent         V1
+1:      Asia 3811953827
+2:    Europe  586098529
+3:    Africa  929539692
+4:  Americas  898871184
+5:   Oceania   24549947
+
+~~~
 
 But sometimes the solution to a problem isn't obvious, or doesn't fit into a
 format we're used to, so it's helpful to have multiple tools in our 
@@ -53,12 +118,20 @@ problem-solving toolbox to fall back on.
 With a for loop we can instead *iterate* over each continent, and tell R to run
 the same command:
 
-```{r}
+
+~~~{.r}
 for (cc in gap[,unique(continent)]) {
   popsum <- gap[year == yy & continent == cc, sum(pop)]
   print(paste(cc, ":", popsum))
 }
-```
+~~~
+
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): object 'yy' not found
+
+~~~
 
 This construct tells R to go through each thing on the right of the `in` 
 operator and store it in the variable `cc`. Inside the *body* of the `for` loop,
@@ -72,14 +145,81 @@ What if we want to look at the change in total population for each continent
 over the years? We can "nest" for loops to iterate through multiple separate
 conditions:
 
-```{r}
+
+~~~{.r}
 for (cc in gap[,unique(continent)]) {
   for (yy in gap[,unique(year)]) {
     popsum <- gap[year == yy & continent == cc, sum(pop)]
     print(paste(cc, yy, ":", popsum))
   }
 }
-```
+~~~
+
+
+
+~~~{.output}
+[1] "Asia 1952 : 1395357351.99999"
+[1] "Asia 1957 : 1562780599"
+[1] "Asia 1962 : 1696357182"
+[1] "Asia 1967 : 1905662900"
+[1] "Asia 1972 : 2150972248"
+[1] "Asia 1977 : 2384513556"
+[1] "Asia 1982 : 2610135582"
+[1] "Asia 1987 : 2871220762"
+[1] "Asia 1992 : 3133292191"
+[1] "Asia 1997 : 3383285500"
+[1] "Asia 2002 : 3601802203"
+[1] "Asia 2007 : 3811953827"
+[1] "Europe 1952 : 418120846"
+[1] "Europe 1957 : 437890351"
+[1] "Europe 1962 : 460355155"
+[1] "Europe 1967 : 481178958"
+[1] "Europe 1972 : 500635059"
+[1] "Europe 1977 : 517164531"
+[1] "Europe 1982 : 531266901"
+[1] "Europe 1987 : 543094160"
+[1] "Europe 1992 : 558142797"
+[1] "Europe 1997 : 568944148"
+[1] "Europe 2002 : 578223869"
+[1] "Europe 2007 : 586098529"
+[1] "Africa 1952 : 237640501"
+[1] "Africa 1957 : 264837738"
+[1] "Africa 1962 : 296516865"
+[1] "Africa 1967 : 335289489"
+[1] "Africa 1972 : 379879541"
+[1] "Africa 1977 : 433061021"
+[1] "Africa 1982 : 499348587"
+[1] "Africa 1987 : 574834110"
+[1] "Africa 1992 : 659081517"
+[1] "Africa 1997 : 743832984"
+[1] "Africa 2002 : 833723916"
+[1] "Africa 2007 : 929539692"
+[1] "Americas 1952 : 345152446"
+[1] "Americas 1957 : 386953916"
+[1] "Americas 1962 : 433270254"
+[1] "Americas 1967 : 480746623"
+[1] "Americas 1972 : 529384210"
+[1] "Americas 1977 : 578067699"
+[1] "Americas 1982 : 630290920"
+[1] "Americas 1987 : 682753971"
+[1] "Americas 1992 : 739274104"
+[1] "Americas 1997 : 796900410"
+[1] "Americas 2002 : 849772762"
+[1] "Americas 2007 : 898871184"
+[1] "Oceania 1952 : 10686006"
+[1] "Oceania 1957 : 11941976"
+[1] "Oceania 1962 : 13283518"
+[1] "Oceania 1967 : 14600414"
+[1] "Oceania 1972 : 16106100"
+[1] "Oceania 1977 : 17239000"
+[1] "Oceania 1982 : 18394850"
+[1] "Oceania 1987 : 19574415"
+[1] "Oceania 1992 : 20919651"
+[1] "Oceania 1997 : 22241430"
+[1] "Oceania 2002 : 23454829"
+[1] "Oceania 2007 : 24549947"
+
+~~~
 
 #### For or Apply? The second circle of hell.
 
@@ -90,7 +230,8 @@ One of the biggest things that trips up novices and experienced R users alike,
 is building a results object (vector, list, matrix, data frame) as your for 
 loop progresses. For example:
 
-```{r}
+
+~~~{.r}
 results <- data.frame(continent=character(), year=numeric(), popsum=numeric())
 for (cc in gap[,unique(continent)]) {
   for (yy in gap[,unique(year)]) {
@@ -100,7 +241,74 @@ for (cc in gap[,unique(continent)]) {
   }
 }
 results
-```
+~~~
+
+
+
+~~~{.output}
+   continent year     popsum
+1       Asia 1952 1395357352
+2       Asia 1957 1562780599
+3       Asia 1962 1696357182
+4       Asia 1967 1905662900
+5       Asia 1972 2150972248
+6       Asia 1977 2384513556
+7       Asia 1982 2610135582
+8       Asia 1987 2871220762
+9       Asia 1992 3133292191
+10      Asia 1997 3383285500
+11      Asia 2002 3601802203
+12      Asia 2007 3811953827
+13    Europe 1952  418120846
+14    Europe 1957  437890351
+15    Europe 1962  460355155
+16    Europe 1967  481178958
+17    Europe 1972  500635059
+18    Europe 1977  517164531
+19    Europe 1982  531266901
+20    Europe 1987  543094160
+21    Europe 1992  558142797
+22    Europe 1997  568944148
+23    Europe 2002  578223869
+24    Europe 2007  586098529
+25    Africa 1952  237640501
+26    Africa 1957  264837738
+27    Africa 1962  296516865
+28    Africa 1967  335289489
+29    Africa 1972  379879541
+30    Africa 1977  433061021
+31    Africa 1982  499348587
+32    Africa 1987  574834110
+33    Africa 1992  659081517
+34    Africa 1997  743832984
+35    Africa 2002  833723916
+36    Africa 2007  929539692
+37  Americas 1952  345152446
+38  Americas 1957  386953916
+39  Americas 1962  433270254
+40  Americas 1967  480746623
+41  Americas 1972  529384210
+42  Americas 1977  578067699
+43  Americas 1982  630290920
+44  Americas 1987  682753971
+45  Americas 1992  739274104
+46  Americas 1997  796900410
+47  Americas 2002  849772762
+48  Americas 2007  898871184
+49   Oceania 1952   10686006
+50   Oceania 1957   11941976
+51   Oceania 1962   13283518
+52   Oceania 1967   14600414
+53   Oceania 1972   16106100
+54   Oceania 1977   17239000
+55   Oceania 1982   18394850
+56   Oceania 1987   19574415
+57   Oceania 1992   20919651
+58   Oceania 1997   22241430
+59   Oceania 2002   23454829
+60   Oceania 2007   24549947
+
+~~~
 
 "Growing" a results object like this is bad practice. At each iteration, R needs
 to talk to the computer's operating system to ask for the right amount of memory
@@ -112,7 +320,8 @@ complex calculations.
 It's much better to tell R how big your results object will be up front, that 
 way R only needs to ask the computer for the right amount of memory once:
 
-```{r}
+
+~~~{.r}
 # First lets calculate the number of rows we need:
 nresults <- gap[,length(unique(continent))] * gap[,length(unique(year))] 
 results <- data.frame(
@@ -143,7 +352,74 @@ for (ii in seq_along(continents)) {
   }
 }
 results
-```
+~~~
+
+
+
+~~~{.output}
+   continent year     popsum
+1       Asia 1952 1395357352
+2       Asia 1957 1562780599
+3       Asia 1962 1696357182
+4       Asia 1967 1905662900
+5       Asia 1972 2150972248
+6       Asia 1977 2384513556
+7       Asia 1982 2610135582
+8       Asia 1987 2871220762
+9       Asia 1992 3133292191
+10      Asia 1997 3383285500
+11      Asia 2002 3601802203
+12      Asia 2007 3811953827
+13    Europe 1952  418120846
+14    Europe 1957  437890351
+15    Europe 1962  460355155
+16    Europe 1967  481178958
+17    Europe 1972  500635059
+18    Europe 1977  517164531
+19    Europe 1982  531266901
+20    Europe 1987  543094160
+21    Europe 1992  558142797
+22    Europe 1997  568944148
+23    Europe 2002  578223869
+24    Europe 2007  586098529
+25    Africa 1952  237640501
+26    Africa 1957  264837738
+27    Africa 1962  296516865
+28    Africa 1967  335289489
+29    Africa 1972  379879541
+30    Africa 1977  433061021
+31    Africa 1982  499348587
+32    Africa 1987  574834110
+33    Africa 1992  659081517
+34    Africa 1997  743832984
+35    Africa 2002  833723916
+36    Africa 2007  929539692
+37  Americas 1952  345152446
+38  Americas 1957  386953916
+39  Americas 1962  433270254
+40  Americas 1967  480746623
+41  Americas 1972  529384210
+42  Americas 1977  578067699
+43  Americas 1982  630290920
+44  Americas 1987  682753971
+45  Americas 1992  739274104
+46  Americas 1997  796900410
+47  Americas 2002  849772762
+48  Americas 2007  898871184
+49   Oceania 1952   10686006
+50   Oceania 1957   11941976
+51   Oceania 1962   13283518
+52   Oceania 1967   14600414
+53   Oceania 1972   16106100
+54   Oceania 1977   17239000
+55   Oceania 1982   18394850
+56   Oceania 1987   19574415
+57   Oceania 1992   20919651
+58   Oceania 1997   22241430
+59   Oceania 2002   23454829
+60   Oceania 2007   24549947
+
+~~~
 
 As you can see, this involves a lot more work. Most R users will even go so far
 to tell you that for loops are bad, and that you should use something called
@@ -160,11 +436,12 @@ each iteration depends on the results of the last (for example a random walk).
 > Sometimes you will find yourself needing to repeat an operation until a certain
 > condition is met. You can do this with a `while` loop.
 > 
-> ```{r, eval=FALSE}
+> 
+> ~~~{.r}
 > while(this condition is true){
 >   do a thing
 > }
-> ```
+> ~~~
 > 
 > As an example, here's a while loop 
 > that generates random numbers from a uniform distribution (the `runif` function)
