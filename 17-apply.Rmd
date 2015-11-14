@@ -1,0 +1,154 @@
+---
+layout: page
+title: IntermediateR for reproducible scientific analysis
+subtitle: Apply functions
+minutes: 20
+---
+
+```{r, include=FALSE}
+source("tools/chunk-options.R")
+library("data.table")
+gap <- fread("data/gapminder-FiveYearData.csv")
+```
+> ## Learning objectives {.objectives}
+>
+> * To learn how to use *apply* to automate tasks efficiently
+> * To know the difference between `apply`, `lapply`, `sapply`, `tapply` and 
+>   `mapply`.
+>
+
+### Vectorized task automation
+
+Previously we introduced you to `for` loops: a basic programming construct that 
+is common across many programming languages. R has more optimised way of 
+automating tasks that are not only faster than for loops, but also take away the
+pain of having to pre-define your results object.
+
+The most common function you will encounter is `lapply`, and the closely related
+`sapply`. 
+
+Lets take a look at the following `for` loop: 
+```{r, eval=FALSE}
+for (cc in gap[,unique(continent)]) {
+  popsum <- gap[year == 2007 & continent == cc, sum(pop)]
+  print(paste(cc, ":", popsum))
+}
+```
+
+It calculates the total population on each continent, then prints out the result.
+If instead we want to save these results, we can either make a vector in advance
+and save the results, or use one of the `apply` to take care of this detail for
+us:
+
+```{r}
+results <- lapply(gap[,unique(continent)], function(cc) {
+  popsum <- gap[year == 2007 & continent == cc, sum(pop)]
+  popsum
+})
+names(results) <- gap[,unique(continent)]
+results
+```
+
+`lapply` takes a vector (or list) as its first argument (in this case a vector 
+of the continent names), then a function as its second argument. This function
+is then executed on every element in the first argument. This is very similar to
+a for loop: first, `cc` stores the first continent name, "Asia", then runs the 
+code in the function body, then `cc` stores the second continent name, and runs
+the function body, and so on. The code in the function body can be thought of in 
+exactly the same way as the body of the `for` loop. The result of the last line
+is then returned to `lapply`, which combines the results into a list.
+
+`sapply` is identical to `lapply`, except that it tries to simplify the results
+object. If we run the same code with `sapply` instead of `lapply` the results 
+will be returned as a vector:
+
+```{r}
+results <- sapply(gap[,unique(continent)], function(cc) {
+  popsum <- gap[year == 2007 & continent == cc, sum(pop)]
+  popsum
+})
+names(results) <- gap[,unique(continent)]
+results
+```
+
+### apply
+
+The `apply` function is useful for matrix data: it allows you loop over either
+the rows or columns of a matrix.
+
+```{r}
+# create some dummy data
+r <- matrix(rnorm(10*4), nrow=10)
+colnames(r) <- letters[1:4]
+rownames(r) <- LETTERS[1:10]
+```
+
+```{r}
+# Get the maximum value in each row:
+apply(r, 1, max)
+# and for each column:
+apply(r, 2, max)
+````
+
+> ### means and sums {.callout}
+>
+> R has inbuilt functions for summing or calculating the mean of rows and 
+> columns: `colSums`, `colMeans`, `rowSums`, `rowMeans`. These are faster than
+> writing your own `apply`!
+>
+
+> ### the return of apply {.callout}
+>
+> When the function given to `apply` returns a vector instead of a single value
+> the results will always be combined into columns, even if running the 
+> function across the rows!
+>
+
+### mapply
+
+The `mapply` function can be used to run a function with different combinations
+of arguments. Let's take a look at an example:
+
+```{r}
+a <- 1:4
+b <- 4:1
+mapply(rep, a, b)
+```
+
+This is the same as running the following code:
+
+```{r}
+rep(a[1], b[1])
+rep(a[2], b[2])
+rep(a[3], b[3])
+rep(a[4], b[4])
+```
+
+or the following `lapply` statement:
+
+```{r}
+lapply(1:4, function(ii) {
+  rep(a[ii], b[ii])
+})
+```
+
+### tapply
+
+The `tapply` function allows you to run a function on different groups within
+a vector. Going back to our first example of the lesson, we can use `tapply` to
+calculate the total population for each continent in 2007:
+
+```{r}
+gap2007 <- gap[year == 2007] # first filter by the year
+tapply(
+  gap2007[,pop], # The column of population counts from the data frame
+  gap2007[,continent], # The column of continent labels for each entry
+  sum # The function to apply to the population vector within each continent
+)
+```
+
+
+
+
+
+
