@@ -1,6 +1,6 @@
 ---
 layout: page
-title: IntermediateR for reproducible scientific analysis
+title: Intermediate R for reproducible scientific analysis
 subtitle: parallel progamming
 minutes: 20
 ---

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
-    <title>Software Carpentry: IntermediateR for reproducible scientific analysis</title>
+    <title>Software Carpentry: Intermediate R for reproducible scientific analysis</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
@@ -26,11 +26,11 @@
       <article>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-                    <a href="index.html"><h1 class="title">IntermediateR for reproducible scientific analysis</h1></a>
+                    <a href="index.html"><h1 class="title">Intermediate R for reproducible scientific analysis</h1></a>
           <h2 class="subtitle">reshape2</h2>
           <section class="objectives panel panel-warning">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-certificate"></span>Learning objectives</h2>
+<h2 id="learning-objectives"><span class="glyphicon glyphicon-certificate"></span>Learning objectives</h2>
 </div>
 <div class="panel-body">
 <ul>
@@ -40,9 +40,9 @@
 </div>
 </section>
 <p>So far we’ve been working with the gapminder dataset:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;data.table&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;data.table&quot;</span>)
 gap &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="st">&quot;data/gapminder-FiveYearData.csv&quot;</span>)
-gap</code></pre>
+gap</code></pre></div>
 <pre><code>##           country year      pop continent lifeExp gdpPercap
 ##    1: Afghanistan 1952  8425333      Asia  28.801  779.4453
 ##    2: Afghanistan 1957  9240934      Asia  30.332  820.8530
@@ -58,9 +58,9 @@ gap</code></pre>
 <p>The format that this dataset has been provided in is called a “long” format: each variable has its own column, and there are several columns with identifying information: where those observations came from/groupings in the data.</p>
 <p>This is a format that is convenient for rapid analysis using R: it is easy to manipulate, filter and query using <code>data.table</code>, and is the format <code>ggplot2</code> expects for plotting.</p>
 <p>However, data often does not come in this format. We might sometimes find we are given data in what is known as a “wide” format: in which variables may be split over multiple columns, one for each group. Let’s read in an alternative version of the gapminder dataset:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This is an example where `fread` doesn&#39;t work: it loses the column names!</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This is an example where `fread` doesn&#39;t work: it loses the column names!</span>
 gapWide &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(<span class="kw">read.csv</span>(<span class="st">&quot;data/gapminder-wide-format.csv&quot;</span>, <span class="dt">header=</span><span class="ot">TRUE</span>))
-gapWide</code></pre>
+gapWide</code></pre></div>
 <pre><code>##      continent        country pop.1952 pop.1957 pop.1962 pop.1967 pop.1972
 ##   1:    Africa        Algeria  9279525 10270856 11000948 12760499 14760787
 ##   2:    Africa         Angola  4232095  4561361  4826015  5247469  5894858
@@ -161,58 +161,45 @@ gapWide</code></pre>
 <p>Being able to transform between “wide” and “long” formats is an incredible useful skill that will save you a lot of time in the future. We can do this using the <code>reshape2</code> package.</p>
 <h3 id="combining-columns">Combining columns</h3>
 <p>To collapse multiple columns into one we use the <code>melt</code> function:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape2)
-gapLong &lt;-<span class="st"> </span><span class="kw">melt</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape2)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;reshape2&#39;
+## 
+## The following objects are masked from &#39;package:data.table&#39;:
+## 
+##     dcast, melt</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapLong &lt;-<span class="st"> </span><span class="kw">melt</span>(
   <span class="dt">data=</span>gapWide,
   <span class="dt">id.vars=</span><span class="kw">c</span>(<span class="st">&quot;continent&quot;</span>, <span class="st">&quot;country&quot;</span>) <span class="co"># All other columns will be collapsed into one</span>
-)</code></pre>
+)</code></pre></div>
 <pre><code>## Warning in melt.data.table(data = gapWide, id.vars = c(&quot;continent&quot;,
-## &quot;country&quot;)): All &#39;measure.vars are NOT of the SAME type. By order of
-## hierarchy, the molten data value column will be of type &#39;double&#39;.
-## Therefore all measure variables that are not of type &#39;double&#39; will be
-## coerced to. Check the DETAILS section of ?melt.data.table for more on
-## coercion.</code></pre>
+## &quot;country&quot;)): &#39;measure.vars&#39; [pop.1952, pop.1957, pop.1962, pop.1967, pop.
+## 1972, pop.1977, pop.1982, pop.1987, pop.1992, pop.1997, pop.2002, pop.
+## 2007, lifeExp.1952, lifeExp.1957, lifeExp.1962, lifeExp.1967, lifeExp.
+## 1972, lifeExp.1977, lifeExp.1982, lifeExp.1987, lifeExp.1992, lifeExp.1997,
+## lifeExp.2002, lifeExp.2007, gdpPercap.1952, gdpPercap.1957, gdpPercap.1962,
+## gdpPercap.1967, gdpPercap.1972, gdpPercap.1977, gdpPercap.1982, gdpPercap.
+## 1987, gdpPercap.1992, gdpPercap.1997, gdpPercap.2002, gdpPercap.2007] are
+## not all of the same type. By order of hierarchy, the molten data value
+## column will be of type &#39;double&#39;. All measure variables not of type &#39;double&#39;
+## will be coerced to. Check DETAILS in ?melt.data.table for more on coercion.</code></pre>
 <p>We get a warning because the ‘pop’ columns are of type ‘integer’ (i.e. whole numbers) while the ‘gdpPercap’ and ‘lifeExp’ columns are type ‘double’ (i.e. decimal values).</p>
 <p>This melt has collapsed the table too far. We need to separate out the different variable types into their own columns. First, lets split the variable column into variable type and year:</p>
-<pre class="sourceCode r"><code class="sourceCode r">gapLong[, <span class="kw">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;year&quot;</span>) :<span class="er">=</span><span class="st"> </span><span class="kw">colsplit</span>(variable, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">.&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;year&quot;</span>))]</code></pre>
-<pre><code>##       continent        country       variable       value       var year
-##    1:    Africa        Algeria       pop.1952 9279525.000       pop 1952
-##    2:    Africa         Angola       pop.1952 4232095.000       pop 1952
-##    3:    Africa          Benin       pop.1952 1738315.000       pop 1952
-##    4:    Africa       Botswana       pop.1952  442308.000       pop 1952
-##    5:    Africa   Burkina Faso       pop.1952 4469979.000       pop 1952
-##   ---                                                                   
-## 5108:    Europe    Switzerland gdpPercap.2007   37506.419 gdpPercap 2007
-## 5109:    Europe         Turkey gdpPercap.2007    8458.276 gdpPercap 2007
-## 5110:    Europe United Kingdom gdpPercap.2007   33203.261 gdpPercap 2007
-## 5111:   Oceania      Australia gdpPercap.2007   34435.367 gdpPercap 2007
-## 5112:   Oceania    New Zealand gdpPercap.2007   25185.009 gdpPercap 2007</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapLong[, <span class="kw">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;year&quot;</span>) :<span class="er">=</span><span class="st"> </span><span class="kw">colsplit</span>(variable, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">.&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;var&quot;</span>, <span class="st">&quot;year&quot;</span>))]</code></pre></div>
 <p>Let’s break this down.</p>
 <p>First, <code>colsplit(variable, &quot;\\.&quot;, c(&quot;var&quot;, &quot;year&quot;))</code> creates two columns called “var” and “year” from the “variable” column, splitting each value on the “.”. We need to specific the pattern as <code>\\.</code> because <code>.</code> by itself is a wild card character: it would match every character in the string.</p>
 <p>Next, we create two new columns in the <code>gapLong</code> data table using the <code>:=</code> operator. To create multiple columns, we specify their names in a vector to the left of the <code>:=</code> operator.</p>
 <p>Now that we’re happy this has worked, we can delete the old <code>variable</code> column:</p>
-<pre class="sourceCode r"><code class="sourceCode r">gapLong[,variable :<span class="er">=</span><span class="st"> </span><span class="ot">NULL</span>]</code></pre>
-<pre><code>##       continent        country       value       var year
-##    1:    Africa        Algeria 9279525.000       pop 1952
-##    2:    Africa         Angola 4232095.000       pop 1952
-##    3:    Africa          Benin 1738315.000       pop 1952
-##    4:    Africa       Botswana  442308.000       pop 1952
-##    5:    Africa   Burkina Faso 4469979.000       pop 1952
-##   ---                                                    
-## 5108:    Europe    Switzerland   37506.419 gdpPercap 2007
-## 5109:    Europe         Turkey    8458.276 gdpPercap 2007
-## 5110:    Europe United Kingdom   33203.261 gdpPercap 2007
-## 5111:   Oceania      Australia   34435.367 gdpPercap 2007
-## 5112:   Oceania    New Zealand   25185.009 gdpPercap 2007</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapLong[,variable :<span class="er">=</span><span class="st"> </span><span class="ot">NULL</span>]</code></pre></div>
 <p>Finally, to split out the <code>value</code> column into the groups stored in <code>var</code>, we use the <code>dcast</code> function. Since we’d like to keep the result as a data table, we’ll explicitly call the method from the <code>data.table</code> package:</p>
-<pre class="sourceCode r"><code class="sourceCode r">gapLong &lt;-<span class="st"> </span><span class="kw">dcast.data.table</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapLong &lt;-<span class="st"> </span><span class="kw">dcast.data.table</span>(
   <span class="dt">data=</span>gapLong,  
   <span class="co"># unique identifier columns go to the left of the &#39;~&#39;, separated by &#39;+&#39; signs.</span>
   <span class="co"># The grouping column goes to the right of the &#39;~&#39;.</span>
   <span class="dt">formula=</span>continent+country+year~var,
   <span class="co"># which column stores the values to be spread over the new columns</span>
   <span class="dt">value.var=</span><span class="st">&quot;value&quot;</span> 
-)</code></pre>
+)</code></pre></div>
 <p>And now we’re back where we’ve started with the long data!</p>
 <p>We’ve shown you the simplest cases for reshaping data. More complex cases may require you to <code>melt</code> or <code>dcast</code> in several steps, and <code>rbind</code> the results.</p>
 <p>Other packages you may find useful for this task are <a href="http://cran.r-project.org/web/packages/tidyr/index.html">tidyr</a> and <a href="http://cran.r-project.org/web/packages/splitstackshape/index.html">splitstackshape</a></p>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
-    <title>Software Carpentry: IntermediateR for reproducible scientific analysis</title>
+    <title>Software Carpentry: Intermediate R for reproducible scientific analysis</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
@@ -26,7 +26,7 @@
       <article>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-                    <a href="index.html"><h1 class="title">IntermediateR for reproducible scientific analysis</h1></a>
+                    <a href="index.html"><h1 class="title">Intermediate R for reproducible scientific analysis</h1></a>
           <h2 class="subtitle">Apply functions</h2>
           <section class="objectives panel panel-warning">
 <div class="panel-heading">
@@ -88,15 +88,15 @@ r &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">
 <span class="kw">rownames</span>(r) &lt;-<span class="st"> </span>LETTERS[<span class="dv">1</span>:<span class="dv">10</span>]</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the maximum value in each row:</span>
 <span class="kw">apply</span>(r, <span class="dv">1</span>, max)</code></pre></div>
-<pre class="output"><code>         A          B          C          D          E          F 
- 0.1100324  1.6890364  0.4121760  0.4107368  0.9641043  1.4261307 
-         G          H          I          J 
- 1.1943626  0.1369749 -0.3391804  1.5082227 
+<pre class="output"><code>        A         B         C         D         E         F         G 
+1.9026721 0.8409824 1.2589881 2.3216163 0.9566330 1.3741352 1.8549427 
+        H         I         J 
+1.1066072 1.0799746 0.8618778 
 </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># and for each column:</span>
 <span class="kw">apply</span>(r, <span class="dv">2</span>, max)</code></pre></div>
 <pre class="output"><code>        a         b         c         d 
-1.6890364 1.1943626 1.5082227 0.9899344 
+1.7335561 1.9026721 0.8618778 2.3216163 
 </code></pre>
 <aside class="callout panel panel-info">
 <div class="panel-heading">

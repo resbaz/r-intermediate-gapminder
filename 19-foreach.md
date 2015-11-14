@@ -1,6 +1,6 @@
 ---
 layout: page
-title: IntermediateR for reproducible scientific analysis
+title: Intermediate R for reproducible scientific analysis
 subtitle: parallel progamming
 minutes: 20
 ---
@@ -155,7 +155,7 @@ runtime1
 
 ```
 ##    user  system elapsed 
-##   0.010   0.001   0.020
+##   0.010   0.001   0.023
 ```
 
 The `system.time` function takes an some R code (wrapped in curly braces, `{`, 
@@ -198,7 +198,7 @@ runtime2
 
 ```
 ##    user  system elapsed 
-##   0.008   0.000   0.059
+##   0.007   0.000   0.054
 ```
 
 Suprisingly this code was much slower! 
@@ -224,7 +224,7 @@ runtime3
 
 ```
 ##    user  system elapsed 
-##   0.013   0.000   0.013
+##   0.012   0.000   0.013
 ```
 
 Finally, an important consideration when parallelising code is deciding how many 

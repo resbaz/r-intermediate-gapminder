@@ -1,6 +1,6 @@
 ---
 layout: page
-title: IntermediateR for reproducible scientific analysis
+title: Intermediate R for reproducible scientific analysis
 subtitle: For loops
 minutes: 20
 ---
@@ -351,6 +351,491 @@ for (ii in seq_along(continents)) {
     this_row <- this_row + 1
   }
 }
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Asia"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Europe"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Africa"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Americas"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.output}
+Warning in `[<-.factor`(`*tmp*`, iseq, value = "Oceania"): invalid factor
+level, NA generated
+
+~~~
+
+
+
+~~~{.r}
 results
 ~~~
 
@@ -358,66 +843,66 @@ results
 
 ~~~{.output}
    continent year     popsum
-1       Asia 1952 1395357352
-2       Asia 1957 1562780599
-3       Asia 1962 1696357182
-4       Asia 1967 1905662900
-5       Asia 1972 2150972248
-6       Asia 1977 2384513556
-7       Asia 1982 2610135582
-8       Asia 1987 2871220762
-9       Asia 1992 3133292191
-10      Asia 1997 3383285500
-11      Asia 2002 3601802203
-12      Asia 2007 3811953827
-13    Europe 1952  418120846
-14    Europe 1957  437890351
-15    Europe 1962  460355155
-16    Europe 1967  481178958
-17    Europe 1972  500635059
-18    Europe 1977  517164531
-19    Europe 1982  531266901
-20    Europe 1987  543094160
-21    Europe 1992  558142797
-22    Europe 1997  568944148
-23    Europe 2002  578223869
-24    Europe 2007  586098529
-25    Africa 1952  237640501
-26    Africa 1957  264837738
-27    Africa 1962  296516865
-28    Africa 1967  335289489
-29    Africa 1972  379879541
-30    Africa 1977  433061021
-31    Africa 1982  499348587
-32    Africa 1987  574834110
-33    Africa 1992  659081517
-34    Africa 1997  743832984
-35    Africa 2002  833723916
-36    Africa 2007  929539692
-37  Americas 1952  345152446
-38  Americas 1957  386953916
-39  Americas 1962  433270254
-40  Americas 1967  480746623
-41  Americas 1972  529384210
-42  Americas 1977  578067699
-43  Americas 1982  630290920
-44  Americas 1987  682753971
-45  Americas 1992  739274104
-46  Americas 1997  796900410
-47  Americas 2002  849772762
-48  Americas 2007  898871184
-49   Oceania 1952   10686006
-50   Oceania 1957   11941976
-51   Oceania 1962   13283518
-52   Oceania 1967   14600414
-53   Oceania 1972   16106100
-54   Oceania 1977   17239000
-55   Oceania 1982   18394850
-56   Oceania 1987   19574415
-57   Oceania 1992   20919651
-58   Oceania 1997   22241430
-59   Oceania 2002   23454829
-60   Oceania 2007   24549947
+1       <NA> 1952 1395357352
+2       <NA> 1957 1562780599
+3       <NA> 1962 1696357182
+4       <NA> 1967 1905662900
+5       <NA> 1972 2150972248
+6       <NA> 1977 2384513556
+7       <NA> 1982 2610135582
+8       <NA> 1987 2871220762
+9       <NA> 1992 3133292191
+10      <NA> 1997 3383285500
+11      <NA> 2002 3601802203
+12      <NA> 2007 3811953827
+13      <NA> 1952  418120846
+14      <NA> 1957  437890351
+15      <NA> 1962  460355155
+16      <NA> 1967  481178958
+17      <NA> 1972  500635059
+18      <NA> 1977  517164531
+19      <NA> 1982  531266901
+20      <NA> 1987  543094160
+21      <NA> 1992  558142797
+22      <NA> 1997  568944148
+23      <NA> 2002  578223869
+24      <NA> 2007  586098529
+25      <NA> 1952  237640501
+26      <NA> 1957  264837738
+27      <NA> 1962  296516865
+28      <NA> 1967  335289489
+29      <NA> 1972  379879541
+30      <NA> 1977  433061021
+31      <NA> 1982  499348587
+32      <NA> 1987  574834110
+33      <NA> 1992  659081517
+34      <NA> 1997  743832984
+35      <NA> 2002  833723916
+36      <NA> 2007  929539692
+37      <NA> 1952  345152446
+38      <NA> 1957  386953916
+39      <NA> 1962  433270254
+40      <NA> 1967  480746623
+41      <NA> 1972  529384210
+42      <NA> 1977  578067699
+43      <NA> 1982  630290920
+44      <NA> 1987  682753971
+45      <NA> 1992  739274104
+46      <NA> 1997  796900410
+47      <NA> 2002  849772762
+48      <NA> 2007  898871184
+49      <NA> 1952   10686006
+50      <NA> 1957   11941976
+51      <NA> 1962   13283518
+52      <NA> 1967   14600414
+53      <NA> 1972   16106100
+54      <NA> 1977   17239000
+55      <NA> 1982   18394850
+56      <NA> 1987   19574415
+57      <NA> 1992   20919651
+58      <NA> 1997   22241430
+59      <NA> 2002   23454829
+60      <NA> 2007   24549947
 
 ~~~
 

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: IntermediateR for reproducible scientific analysis
+title: Intermediate R for reproducible scientific analysis
 subtitle: data.table
 minutes: 20
 ---
@@ -102,8 +102,7 @@ all.equal(gap, gap_df)
 ```
 
 ```
-## [1] "Attributes: < Component \"class\": Lengths (2, 1) differ (string compare on first 1) >"
-## [2] "Attributes: < Component \"class\": 1 string mismatch >"
+## Error in `:=`((i), .xi): Check that is.data.table(DT) == TRUE. Otherwise, := and `:=`(...) are defined for use in j, once only and in particular ways. See help(":=").
 ```
 
 ```r
@@ -111,7 +110,7 @@ all.equal(gap, gap_df, check.attributes = FALSE)
 ```
 
 ```
-## [1] TRUE
+## Error in `:=`((i), .xi): Check that is.data.table(DT) == TRUE. Otherwise, := and `:=`(...) are defined for use in j, once only and in particular ways. See help(":=").
 ```
 
 This shows us that the only the attributes of the object are different, but the
@@ -532,290 +531,251 @@ gap_df[,"continent"]
 ```
 
 ```
-##    [1] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##    [7] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##   [13] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##   [19] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##   [25] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##   [31] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##   [37] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##   [43] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##   [49] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##   [55] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##   [61] "Oceania"  "Oceania"  "Oceania"  "Oceania"  "Oceania"  "Oceania" 
-##   [67] "Oceania"  "Oceania"  "Oceania"  "Oceania"  "Oceania"  "Oceania" 
-##   [73] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##   [79] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##   [85] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##   [91] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##   [97] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [103] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [109] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [115] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [121] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [127] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [133] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [139] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [145] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [151] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [157] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [163] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [169] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [175] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [181] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [187] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [193] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [199] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [205] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [211] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [217] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [223] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [229] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [235] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [241] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [247] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [253] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [259] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [265] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [271] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [277] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [283] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [289] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [295] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [301] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [307] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [313] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [319] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [325] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [331] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [337] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [343] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [349] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [355] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [361] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [367] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [373] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [379] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [385] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [391] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [397] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [403] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [409] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [415] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [421] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [427] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [433] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [439] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [445] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [451] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [457] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [463] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [469] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [475] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [481] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [487] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [493] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [499] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [505] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [511] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [517] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [523] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [529] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [535] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [541] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [547] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [553] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [559] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [565] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [571] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [577] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [583] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [589] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [595] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [601] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [607] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [613] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [619] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [625] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [631] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [637] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [643] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [649] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [655] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [661] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [667] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [673] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [679] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [685] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [691] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [697] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [703] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [709] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [715] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [721] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [727] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [733] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [739] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [745] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [751] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [757] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [763] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [769] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [775] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-##  [781] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [787] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [793] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [799] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [805] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [811] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [817] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [823] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [829] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [835] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [841] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [847] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [853] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [859] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [865] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [871] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [877] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [883] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [889] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [895] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [901] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [907] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [913] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [919] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [925] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [931] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [937] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [943] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-##  [949] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [955] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [961] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [967] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [973] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [979] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-##  [985] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [991] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-##  [997] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1003] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1009] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1015] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1021] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1027] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1033] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1039] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1045] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1051] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1057] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1063] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1069] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1075] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1081] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1087] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1093] "Oceania"  "Oceania"  "Oceania"  "Oceania"  "Oceania"  "Oceania" 
-## [1099] "Oceania"  "Oceania"  "Oceania"  "Oceania"  "Oceania"  "Oceania" 
-## [1105] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1111] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1117] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1123] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1129] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1135] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1141] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1147] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1153] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1159] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1165] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1171] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1177] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1183] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1189] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1195] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1201] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1207] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1213] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1219] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1225] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1231] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1237] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1243] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1249] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1255] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1261] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1267] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1273] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1279] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1285] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1291] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1297] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1303] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1309] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1315] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1321] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1327] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1333] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1339] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1345] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1351] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1357] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1363] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1369] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1375] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1381] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1387] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1393] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1399] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1405] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1411] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1417] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1423] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1429] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1435] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1441] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1447] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1453] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1459] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1465] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1471] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1477] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1483] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1489] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1495] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1501] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1507] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1513] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1519] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1525] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1531] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1537] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1543] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1549] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1555] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1561] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1567] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1573] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1579] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1585] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1591] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1597] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1603] "Europe"   "Europe"   "Europe"   "Europe"   "Europe"   "Europe"  
-## [1609] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1615] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1621] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1627] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1633] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1639] "Americas" "Americas" "Americas" "Americas" "Americas" "Americas"
-## [1645] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1651] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1657] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1663] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1669] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1675] "Asia"     "Asia"     "Asia"     "Asia"     "Asia"     "Asia"    
-## [1681] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1687] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1693] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"  
-## [1699] "Africa"   "Africa"   "Africa"   "Africa"   "Africa"   "Africa"
+##    [1] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##    [8] Asia     Asia     Asia     Asia     Asia     Europe   Europe  
+##   [15] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##   [22] Europe   Europe   Europe   Africa   Africa   Africa   Africa  
+##   [29] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##   [36] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##   [43] Africa   Africa   Africa   Africa   Africa   Africa   Americas
+##   [50] Americas Americas Americas Americas Americas Americas Americas
+##   [57] Americas Americas Americas Americas Oceania  Oceania  Oceania 
+##   [64] Oceania  Oceania  Oceania  Oceania  Oceania  Oceania  Oceania 
+##   [71] Oceania  Oceania  Europe   Europe   Europe   Europe   Europe  
+##   [78] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##   [85] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##   [92] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##   [99] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [106] Asia     Asia     Asia     Europe   Europe   Europe   Europe  
+##  [113] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [120] Europe   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [127] Africa   Africa   Africa   Africa   Africa   Africa   Americas
+##  [134] Americas Americas Americas Americas Americas Americas Americas
+##  [141] Americas Americas Americas Americas Europe   Europe   Europe  
+##  [148] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [155] Europe   Europe   Africa   Africa   Africa   Africa   Africa  
+##  [162] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [169] Americas Americas Americas Americas Americas Americas Americas
+##  [176] Americas Americas Americas Americas Americas Europe   Europe  
+##  [183] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [190] Europe   Europe   Europe   Africa   Africa   Africa   Africa  
+##  [197] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [204] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [211] Africa   Africa   Africa   Africa   Africa   Africa   Asia    
+##  [218] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [225] Asia     Asia     Asia     Asia     Africa   Africa   Africa  
+##  [232] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [239] Africa   Africa   Americas Americas Americas Americas Americas
+##  [246] Americas Americas Americas Americas Americas Americas Americas
+##  [253] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [260] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [267] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [274] Africa   Africa   Africa   Americas Americas Americas Americas
+##  [281] Americas Americas Americas Americas Americas Americas Americas
+##  [288] Americas Asia     Asia     Asia     Asia     Asia     Asia    
+##  [295] Asia     Asia     Asia     Asia     Asia     Asia     Americas
+##  [302] Americas Americas Americas Americas Americas Americas Americas
+##  [309] Americas Americas Americas Americas Africa   Africa   Africa  
+##  [316] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [323] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [330] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [337] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [344] Africa   Africa   Africa   Africa   Africa   Americas Americas
+##  [351] Americas Americas Americas Americas Americas Americas Americas
+##  [358] Americas Americas Americas Africa   Africa   Africa   Africa  
+##  [365] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [372] Africa   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [379] Europe   Europe   Europe   Europe   Europe   Europe   Americas
+##  [386] Americas Americas Americas Americas Americas Americas Americas
+##  [393] Americas Americas Americas Americas Europe   Europe   Europe  
+##  [400] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [407] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [414] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [421] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [428] Africa   Africa   Africa   Africa   Africa   Americas Americas
+##  [435] Americas Americas Americas Americas Americas Americas Americas
+##  [442] Americas Americas Americas Americas Americas Americas Americas
+##  [449] Americas Americas Americas Americas Americas Americas Americas
+##  [456] Americas Africa   Africa   Africa   Africa   Africa   Africa  
+##  [463] Africa   Africa   Africa   Africa   Africa   Africa   Americas
+##  [470] Americas Americas Americas Americas Americas Americas Americas
+##  [477] Americas Americas Americas Americas Africa   Africa   Africa  
+##  [484] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [491] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [498] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [505] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [512] Africa   Africa   Africa   Africa   Africa   Europe   Europe  
+##  [519] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [526] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [533] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [540] Europe   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [547] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [554] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [561] Africa   Africa   Africa   Africa   Europe   Europe   Europe  
+##  [568] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [575] Europe   Europe   Africa   Africa   Africa   Africa   Africa  
+##  [582] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [589] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [596] Europe   Europe   Europe   Europe   Europe   Americas Americas
+##  [603] Americas Americas Americas Americas Americas Americas Americas
+##  [610] Americas Americas Americas Africa   Africa   Africa   Africa  
+##  [617] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [624] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [631] Africa   Africa   Africa   Africa   Africa   Africa   Americas
+##  [638] Americas Americas Americas Americas Americas Americas Americas
+##  [645] Americas Americas Americas Americas Americas Americas Americas
+##  [652] Americas Americas Americas Americas Americas Americas Americas
+##  [659] Americas Americas Asia     Asia     Asia     Asia     Asia    
+##  [666] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [673] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [680] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [687] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [694] Europe   Europe   Europe   Asia     Asia     Asia     Asia    
+##  [701] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [708] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [715] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [722] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [729] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [736] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [743] Asia     Asia     Europe   Europe   Europe   Europe   Europe  
+##  [750] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [757] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [764] Asia     Asia     Asia     Asia     Asia     Europe   Europe  
+##  [771] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+##  [778] Europe   Europe   Europe   Americas Americas Americas Americas
+##  [785] Americas Americas Americas Americas Americas Americas Americas
+##  [792] Americas Asia     Asia     Asia     Asia     Asia     Asia    
+##  [799] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [806] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [813] Asia     Asia     Asia     Asia     Africa   Africa   Africa  
+##  [820] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [827] Africa   Africa   Asia     Asia     Asia     Asia     Asia    
+##  [834] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [841] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [848] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [855] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [862] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [869] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [876] Asia     Africa   Africa   Africa   Africa   Africa   Africa  
+##  [883] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [890] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [897] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [904] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [911] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [918] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [925] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [932] Africa   Africa   Africa   Africa   Africa   Asia     Asia    
+##  [939] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+##  [946] Asia     Asia     Asia     Africa   Africa   Africa   Africa  
+##  [953] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [960] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [967] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [974] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+##  [981] Africa   Africa   Africa   Africa   Americas Americas Americas
+##  [988] Americas Americas Americas Americas Americas Americas Americas
+##  [995] Americas Americas Asia     Asia     Asia     Asia     Asia    
+## [1002] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1009] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1016] Europe   Europe   Europe   Europe   Europe   Africa   Africa  
+## [1023] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1030] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1037] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1044] Africa   Asia     Asia     Asia     Asia     Asia     Asia    
+## [1051] Asia     Asia     Asia     Asia     Asia     Asia     Africa  
+## [1058] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1065] Africa   Africa   Africa   Africa   Asia     Asia     Asia    
+## [1072] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1079] Asia     Asia     Europe   Europe   Europe   Europe   Europe  
+## [1086] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1093] Oceania  Oceania  Oceania  Oceania  Oceania  Oceania  Oceania 
+## [1100] Oceania  Oceania  Oceania  Oceania  Oceania  Americas Americas
+## [1107] Americas Americas Americas Americas Americas Americas Americas
+## [1114] Americas Americas Americas Africa   Africa   Africa   Africa  
+## [1121] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1128] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1135] Africa   Africa   Africa   Africa   Africa   Africa   Europe  
+## [1142] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1149] Europe   Europe   Europe   Europe   Asia     Asia     Asia    
+## [1156] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1163] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1170] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1177] Americas Americas Americas Americas Americas Americas Americas
+## [1184] Americas Americas Americas Americas Americas Americas Americas
+## [1191] Americas Americas Americas Americas Americas Americas Americas
+## [1198] Americas Americas Americas Americas Americas Americas Americas
+## [1205] Americas Americas Americas Americas Americas Americas Americas
+## [1212] Americas Asia     Asia     Asia     Asia     Asia     Asia    
+## [1219] Asia     Asia     Asia     Asia     Asia     Asia     Europe  
+## [1226] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1233] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1240] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1247] Europe   Europe   Americas Americas Americas Americas Americas
+## [1254] Americas Americas Americas Americas Americas Americas Americas
+## [1261] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1268] Africa   Africa   Africa   Africa   Africa   Europe   Europe  
+## [1275] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1282] Europe   Europe   Europe   Africa   Africa   Africa   Africa  
+## [1289] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1296] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1303] Africa   Africa   Africa   Africa   Africa   Africa   Asia    
+## [1310] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1317] Asia     Asia     Asia     Asia     Africa   Africa   Africa  
+## [1324] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1331] Africa   Africa   Europe   Europe   Europe   Europe   Europe  
+## [1338] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1345] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1352] Africa   Africa   Africa   Africa   Africa   Asia     Asia    
+## [1359] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1366] Asia     Asia     Asia     Europe   Europe   Europe   Europe  
+## [1373] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1380] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1387] Europe   Europe   Europe   Europe   Europe   Europe   Africa  
+## [1394] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1401] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1408] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1415] Africa   Africa   Europe   Europe   Europe   Europe   Europe  
+## [1422] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1429] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1436] Asia     Asia     Asia     Asia     Asia     Africa   Africa  
+## [1443] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1450] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1457] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1464] Africa   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1471] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1478] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1485] Europe   Europe   Europe   Europe   Asia     Asia     Asia    
+## [1492] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1499] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1506] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1513] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1520] Africa   Africa   Africa   Africa   Africa   Asia     Asia    
+## [1527] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1534] Asia     Asia     Asia     Africa   Africa   Africa   Africa  
+## [1541] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1548] Africa   Americas Americas Americas Americas Americas Americas
+## [1555] Americas Americas Americas Americas Americas Americas Africa  
+## [1562] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1569] Africa   Africa   Africa   Africa   Europe   Europe   Europe  
+## [1576] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1583] Europe   Europe   Africa   Africa   Africa   Africa   Africa  
+## [1590] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1597] Europe   Europe   Europe   Europe   Europe   Europe   Europe  
+## [1604] Europe   Europe   Europe   Europe   Europe   Americas Americas
+## [1611] Americas Americas Americas Americas Americas Americas Americas
+## [1618] Americas Americas Americas Americas Americas Americas Americas
+## [1625] Americas Americas Americas Americas Americas Americas Americas
+## [1632] Americas Americas Americas Americas Americas Americas Americas
+## [1639] Americas Americas Americas Americas Americas Americas Asia    
+## [1646] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1653] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1660] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1667] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1674] Asia     Asia     Asia     Asia     Asia     Asia     Asia    
+## [1681] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1688] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1695] Africa   Africa   Africa   Africa   Africa   Africa   Africa  
+## [1702] Africa   Africa   Africa  
+## Levels: Africa Americas Asia Europe Oceania
 ```
 
 To select multiple columns, we need to pass in the column names as a list:
@@ -4339,24 +4299,6 @@ To create a new column in the data table, we have to use the special operator
 ```r
 # Add a new column to the gapminder data with total gdp
 gap[, total_gdp := gdpPercap * pop]
-```
-
-```
-##           country year      pop continent lifeExp gdpPercap  total_gdp
-##    1: Afghanistan 1952  8425333      Asia  28.801  779.4453 6567086330
-##    2: Afghanistan 1957  9240934      Asia  30.332  820.8530 7585448670
-##    3: Afghanistan 1962 10267083      Asia  31.997  853.1007 8758855797
-##    4: Afghanistan 1967 11537966      Asia  34.020  836.1971 9648014150
-##    5: Afghanistan 1972 13079460      Asia  36.088  739.9811 9678553274
-##   ---                                                                 
-## 1700:    Zimbabwe 1987  9216418    Africa  62.351  706.1573 6508240905
-## 1701:    Zimbabwe 1992 10704340    Africa  60.377  693.4208 7422611852
-## 1702:    Zimbabwe 1997 11404948    Africa  46.809  792.4500 9037850590
-## 1703:    Zimbabwe 2002 11926563    Africa  39.989  672.0386 8015110972
-## 1704:    Zimbabwe 2007 12311143    Africa  43.487  469.7093 5782658337
-```
-
-```r
 # data frame equivalent
 gap_df <- cbind(gap_df, total_gdp = gap_df$gdpPercap * gap_df$pop)
 ```
@@ -4367,24 +4309,6 @@ To delete a column, we assign it `NULL`
 ```r
 # Delete the total_gdp column
 gap[, total_gdp := NULL]
-```
-
-```
-##           country year      pop continent lifeExp gdpPercap
-##    1: Afghanistan 1952  8425333      Asia  28.801  779.4453
-##    2: Afghanistan 1957  9240934      Asia  30.332  820.8530
-##    3: Afghanistan 1962 10267083      Asia  31.997  853.1007
-##    4: Afghanistan 1967 11537966      Asia  34.020  836.1971
-##    5: Afghanistan 1972 13079460      Asia  36.088  739.9811
-##   ---                                                      
-## 1700:    Zimbabwe 1987  9216418    Africa  62.351  706.1573
-## 1701:    Zimbabwe 1992 10704340    Africa  60.377  693.4208
-## 1702:    Zimbabwe 1997 11404948    Africa  46.809  792.4500
-## 1703:    Zimbabwe 2002 11926563    Africa  39.989  672.0386
-## 1704:    Zimbabwe 2007 12311143    Africa  43.487  469.7093
-```
-
-```r
 # data frame equivalent
 gap_df <- gap_df[, -which(names(gap_df) == "total_gdp")]
 ```

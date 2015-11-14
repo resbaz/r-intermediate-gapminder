@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
-    <title>Software Carpentry: IntermediateR for reproducible scientific analysis</title>
+    <title>Software Carpentry: Intermediate R for reproducible scientific analysis</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
@@ -26,11 +26,11 @@
       <article>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-                    <a href="index.html"><h1 class="title">IntermediateR for reproducible scientific analysis</h1></a>
+                    <a href="index.html"><h1 class="title">Intermediate R for reproducible scientific analysis</h1></a>
           <h2 class="subtitle">parallel progamming</h2>
           <section class="objectives panel panel-warning">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-certificate"></span>Learning objectives</h2>
+<h2 id="learning-objectives"><span class="glyphicon glyphicon-certificate"></span>Learning objectives</h2>
 </div>
 <div class="panel-body">
 <ul>
@@ -45,27 +45,27 @@
 <p>In this lesson we’re going to learn how to parallelise this kind of task over multiple cores on your computer, and the pitfalls to avoid.</p>
 <h3 id="registering-a-parallel-backend">Registering a parallel backend</h3>
 <p>First, we need to tell R how many cores to use for any parallel calculation. For this lesson we will tell R to use one less core than the total number of cores on our machine: this leaves one processor free for other tasks while calculations happen in the background:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(doParallel)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(doParallel)</code></pre></div>
 <pre><code>## Loading required package: foreach
 ## Loading required package: iterators
 ## Loading required package: parallel</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">cl &lt;-<span class="st"> </span><span class="kw">makeCluster</span>(<span class="dv">2</span>)
-<span class="kw">registerDoParallel</span>(cl)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cl &lt;-<span class="st"> </span><span class="kw">makeCluster</span>(<span class="dv">2</span>)
+<span class="kw">registerDoParallel</span>(cl)</code></pre></div>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
-<h4><span class="glyphicon glyphicon-pushpin"></span>How many cores?</h4>
+<h4 id="how-many-cores"><span class="glyphicon glyphicon-pushpin"></span>How many cores?</h4>
 </div>
 <div class="panel-body">
 <p>In practice you should never register more cores with R than you have on your computer, otherwise the parallel calculations might cause your computer to “thrash”: grind to a halt and run extremely slowly. Note even the parallel calculations will run extremely slowly, so this offers no advantage.</p>
 <p>The <code>detectCores</code> function will tell you how many cores you can safely parallelise over:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(parallel)
-<span class="kw">detectCores</span>()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(parallel)
+<span class="kw">detectCores</span>()</code></pre></div>
 <pre><code>## [1] 8</code></pre>
 </div>
 </aside>
 <h3 id="parallel-for-loops">Parallel for loops</h3>
 <p>There are several components to a parallel for loop. Let’s learn through an example:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load in the parallel for loop library</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load in the parallel for loop library</span>
 <span class="kw">library</span>(foreach)
 <span class="co"># Get a list of countries</span>
 countries &lt;-<span class="st"> </span><span class="kw">unique</span>(gap$country)
@@ -77,7 +77,7 @@ diffLifeExp &lt;-<span class="st"> </span><span class="kw">foreach</span>(<span 
     <span class="dt">diffLifeExp=</span>diffLE
   )
 }
-diffLifeExp</code></pre>
+diffLifeExp</code></pre></div>
 <pre><code>##                 country diffLifeExp
 ##   1:        Afghanistan      15.027
 ##   2:            Albania      21.193
@@ -97,7 +97,7 @@ diffLifeExp</code></pre>
 <h3 id="efficient-parallelisation-and-communication-overhead">Efficient parallelisation and communication overhead</h3>
 <p>Parallelisation doesn’t come for free: there is a communication overhead in sending objects to and receiving objects from each parallel core.</p>
 <p>In the following examples, we will calculate the mean global life expectancy in each year, and use <code>system.time</code> to examine the total runtime of the code.</p>
-<pre class="sourceCode r"><code class="sourceCode r">years &lt;-<span class="st"> </span><span class="kw">unique</span>(gap$year)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">years &lt;-<span class="st"> </span><span class="kw">unique</span>(gap$year)
 runtime1 &lt;-<span class="st"> </span><span class="kw">system.time</span>({
   meanLifeExp &lt;-<span class="st"> </span><span class="kw">foreach</span>(
     <span class="dt">yy =</span> years, 
@@ -106,13 +106,13 @@ runtime1 &lt;-<span class="st"> </span><span class="kw">system.time</span>({
     <span class="kw">mean</span>(gap[year ==<span class="st"> </span>yy, lifeExp])
   }
 })
-runtime1</code></pre>
+runtime1</code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.010   0.001   0.020</code></pre>
+##   0.010   0.001   0.023</code></pre>
 <p>The <code>system.time</code> function takes an some R code (wrapped in curly braces, <code>{</code>, <code>}</code>), runs it, then returns the total time taken by the code to run. In this case we care about the “elapsed” field: this gives the “real” time taken by the computer to run the code. The “user” and “system” fields provide information about CPU time taken by various levels of the operating system, see <code>help(&quot;proc.time&quot;)</code>.</p>
 <p>This was actually a very inefficient way to parallelise our code. Since there are 12 different <code>years</code>, the code is sending out the calculations for 1952 and 1957 to the two cores, collecting the results, then sending out 1962 and 1967 and so on.</p>
 <p>It is much more effective to break the problem into “chunks”: one for each parallel core. The <code>itertools</code> package provides useful functions that integrate with <code>foreach</code> for solving this. Here we’ll use <code>isplitVector</code> to split <code>years</code> into two chunks, then on each parallel core, use a non-parallelised (serial) <code>foreach</code> loop to run the calculations for each year. Note we need to tell each parallel core about the <code>foreach</code> package. We’ll also use the <code>getDoParWorkers</code> function to automatically detect how many cores we have registered. This means you can return with a different number of cores later without having to update values throughout your code:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(itertools)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(itertools)
 runtime2 &lt;-<span class="st"> </span><span class="kw">system.time</span>({
   meanLifeExp &lt;-<span class="st"> </span><span class="kw">foreach</span>(
       <span class="dt">chunk =</span> <span class="kw">isplitVector</span>(years, <span class="dt">chunks=</span><span class="kw">getDoParWorkers</span>()), 
@@ -123,19 +123,19 @@ runtime2 &lt;-<span class="st"> </span><span class="kw">system.time</span>({
     }
   }
 })
-runtime2</code></pre>
+runtime2</code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.008   0.000   0.059</code></pre>
+##   0.007   0.000   0.054</code></pre>
 <p>Suprisingly this code was much slower! So what happened? In this case the overhead of setting up the parallel code efficiently outweighed the benefits. Since we’re working with a toy dataset, the actual calculations are very, very, fast. In comparison to our first example, we’ve now added the <code>foreach</code> package, which gets loaded in each new R session, as well as the chunking of tasks through <code>isplitVector</code>. Together, these take longer than the actual calculations!</p>
 <p>For example we run the code not in parallel using <code>sapply</code> we see the fastest overall time:</p>
-<pre class="sourceCode r"><code class="sourceCode r">runtime3 &lt;-<span class="st"> </span><span class="kw">system.time</span>({
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">runtime3 &lt;-<span class="st"> </span><span class="kw">system.time</span>({
   meanLifeExp &lt;-<span class="st"> </span><span class="kw">sapply</span>(years, function(yy) {
     <span class="kw">mean</span>(gap[year ==<span class="st"> </span>yy, lifeExp])
   })
 })
-runtime3</code></pre>
+runtime3</code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.013   0.000   0.013</code></pre>
+##   0.012   0.000   0.013</code></pre>
 <p>Finally, an important consideration when parallelising code is deciding how many cores is the most effective for the task at hand. With too many cores the chunks can become small enough that the communication and setup overhead outweighs the benefit.</p>
         </div>
       </div>

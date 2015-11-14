@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
-    <title>Software Carpentry: IntermediateR for reproducible scientific analysis</title>
+    <title>Software Carpentry: Intermediate R for reproducible scientific analysis</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
@@ -26,11 +26,11 @@
       <article>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-                    <a href="index.html"><h1 class="title">IntermediateR for reproducible scientific analysis</h1></a>
+                    <a href="index.html"><h1 class="title">Intermediate R for reproducible scientific analysis</h1></a>
           <h2 class="subtitle">For loops</h2>
           <section class="objectives panel panel-warning">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-certificate"></span>Learning objectives</h2>
+<h2 id="learning-objectives"><span class="glyphicon glyphicon-certificate"></span>Learning objectives</h2>
 </div>
 <div class="panel-body">
 <ul>
@@ -42,24 +42,24 @@
 <p>Often when we’re trying to solve a problem or run some analysis we find ourselves doing the same thing over, and over, and over again on different groupings of data, or on different files, or with slight parameter variations.</p>
 <p>The great thing about R, and programming in general, is it allows us to be <strong>lazy</strong>. Why do a repetitive task if you can make the computer do it for you?</p>
 <p>For example, lets say I wanted to calculated the total population for each continent in the gapminder dataset in 2007. We could do this in several ways, but the most basic approach is manually:</p>
-<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Asia&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Asia&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre></div>
 <pre class="output"><code>[1] 3811953827
 </code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Africa&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Africa&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre></div>
 <pre class="output"><code>[1] 929539692
 </code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Americas&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Americas&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre></div>
 <pre class="output"><code>[1] 898871184
 </code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Europe&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Europe&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre></div>
 <pre class="output"><code>[1] 586098529
 </code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Oceania&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span> &amp;<span class="st"> </span>continent ==<span class="st"> &quot;Oceania&quot;</span>, <span class="kw">sum</span>(pop)]</code></pre></div>
 <pre class="output"><code>[1] 24549947
 </code></pre>
 <p>This is tedious to type out. We can do it, but imagine if we wanted to run some calculation for each country!</p>
 <p>The clever way to do this would be to use our recently acquired data.table skills:</p>
-<pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span>, <span class="kw">sum</span>(pop), by=continent]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap[year ==<span class="st"> </span><span class="dv">2007</span>, <span class="kw">sum</span>(pop), by=continent]</code></pre></div>
 <pre class="output"><code>   continent         V1
 1:      Asia 3811953827
 2:    Europe  586098529
@@ -69,20 +69,20 @@
 </code></pre>
 <p>But sometimes the solution to a problem isn’t obvious, or doesn’t fit into a format we’re used to, so it’s helpful to have multiple tools in our problem-solving toolbox to fall back on.</p>
 <p>With a for loop we can instead <em>iterate</em> over each continent, and tell R to run the same command:</p>
-<pre class="sourceCode r"><code class="sourceCode r">for (cc in gap[,<span class="kw">unique</span>(continent)]) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for (cc in gap[,<span class="kw">unique</span>(continent)]) {
   popsum &lt;-<span class="st"> </span>gap[year ==<span class="st"> </span>yy &amp;<span class="st"> </span>continent ==<span class="st"> </span>cc, <span class="kw">sum</span>(pop)]
   <span class="kw">print</span>(<span class="kw">paste</span>(cc, <span class="st">&quot;:&quot;</span>, popsum))
-}</code></pre>
+}</code></pre></div>
 <pre class="output"><code>Error in eval(expr, envir, enclos): object &#39;yy&#39; not found
 </code></pre>
 <p>This construct tells R to go through each thing on the right of the <code>in</code> operator and store it in the variable <code>cc</code>. Inside the <em>body</em> of the <code>for</code> loop, i.e. any lines of code that fall between the curly braces (<code>{</code> and <code>}</code>), we can then access the value of <code>cc</code> to do whatever we like. So first, <code>cc</code> will hold the value “Asia”, then it will run the line of code, and return back to the top of the loop. Next <code>cc</code> will hold the value “Europe”, and do the same thing, and so on.</p>
 <p>What if we want to look at the change in total population for each continent over the years? We can “nest” for loops to iterate through multiple separate conditions:</p>
-<pre class="sourceCode r"><code class="sourceCode r">for (cc in gap[,<span class="kw">unique</span>(continent)]) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for (cc in gap[,<span class="kw">unique</span>(continent)]) {
   for (yy in gap[,<span class="kw">unique</span>(year)]) {
     popsum &lt;-<span class="st"> </span>gap[year ==<span class="st"> </span>yy &amp;<span class="st"> </span>continent ==<span class="st"> </span>cc, <span class="kw">sum</span>(pop)]
     <span class="kw">print</span>(<span class="kw">paste</span>(cc, yy, <span class="st">&quot;:&quot;</span>, popsum))
   }
-}</code></pre>
+}</code></pre></div>
 <pre class="output"><code>[1] &quot;Asia 1952 : 1395357351.99999&quot;
 [1] &quot;Asia 1957 : 1562780599&quot;
 [1] &quot;Asia 1962 : 1696357182&quot;
@@ -149,7 +149,7 @@
 <p>We made our way into the second Circle, here live the gluttons. – <a href="http://www.burns-stat.com/pages/Tutor/R_inferno.pdf">The R inferno</a></p>
 </blockquote>
 <p>One of the biggest things that trips up novices and experienced R users alike, is building a results object (vector, list, matrix, data frame) as your for loop progresses. For example:</p>
-<pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">continent=</span><span class="kw">character</span>(), <span class="dt">year=</span><span class="kw">numeric</span>(), <span class="dt">popsum=</span><span class="kw">numeric</span>())
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">continent=</span><span class="kw">character</span>(), <span class="dt">year=</span><span class="kw">numeric</span>(), <span class="dt">popsum=</span><span class="kw">numeric</span>())
 for (cc in gap[,<span class="kw">unique</span>(continent)]) {
   for (yy in gap[,<span class="kw">unique</span>(year)]) {
     popsum &lt;-<span class="st"> </span>gap[year ==<span class="st"> </span>yy &amp;<span class="st"> </span>continent ==<span class="st"> </span>cc, <span class="kw">sum</span>(pop)]
@@ -157,7 +157,7 @@ for (cc in gap[,<span class="kw">unique</span>(continent)]) {
     results &lt;-<span class="st"> </span><span class="kw">rbind</span>(results, this_result)
   }
 }
-results</code></pre>
+results</code></pre></div>
 <pre class="output"><code>   continent year     popsum
 1       Asia 1952 1395357352
 2       Asia 1957 1562780599
@@ -222,7 +222,7 @@ results</code></pre>
 </code></pre>
 <p>“Growing” a results object like this is bad practice. At each iteration, R needs to talk to the computer’s operating system to ask for the right amount of memory for your new results object. Like all diplomatic negotiations, this can take a while (at least in computer time!). As a result, you might find that your for loops seem to take forever when you start working with bigger datasets or more complex calculations.</p>
 <p>It’s much better to tell R how big your results object will be up front, that way R only needs to ask the computer for the right amount of memory once:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># First lets calculate the number of rows we need:</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># First lets calculate the number of rows we need:</span>
 nresults &lt;-<span class="st"> </span>gap[,<span class="kw">length</span>(<span class="kw">unique</span>(continent))] *<span class="st"> </span>gap[,<span class="kw">length</span>(<span class="kw">unique</span>(year))] 
 results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
   <span class="dt">continent=</span><span class="kw">character</span>(<span class="dt">length=</span>nresults), 
@@ -250,93 +250,273 @@ for (ii in <span class="kw">seq_along</span>(continents)) {
     <span class="co"># Increment the row counter</span>
     this_row &lt;-<span class="st"> </span>this_row +<span class="st"> </span><span class="dv">1</span>
   }
-}
-results</code></pre>
+}</code></pre></div>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Asia&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Europe&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Africa&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Americas&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<pre class="output"><code>Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = &quot;Oceania&quot;): invalid factor
+level, NA generated
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results</code></pre></div>
 <pre class="output"><code>   continent year     popsum
-1       Asia 1952 1395357352
-2       Asia 1957 1562780599
-3       Asia 1962 1696357182
-4       Asia 1967 1905662900
-5       Asia 1972 2150972248
-6       Asia 1977 2384513556
-7       Asia 1982 2610135582
-8       Asia 1987 2871220762
-9       Asia 1992 3133292191
-10      Asia 1997 3383285500
-11      Asia 2002 3601802203
-12      Asia 2007 3811953827
-13    Europe 1952  418120846
-14    Europe 1957  437890351
-15    Europe 1962  460355155
-16    Europe 1967  481178958
-17    Europe 1972  500635059
-18    Europe 1977  517164531
-19    Europe 1982  531266901
-20    Europe 1987  543094160
-21    Europe 1992  558142797
-22    Europe 1997  568944148
-23    Europe 2002  578223869
-24    Europe 2007  586098529
-25    Africa 1952  237640501
-26    Africa 1957  264837738
-27    Africa 1962  296516865
-28    Africa 1967  335289489
-29    Africa 1972  379879541
-30    Africa 1977  433061021
-31    Africa 1982  499348587
-32    Africa 1987  574834110
-33    Africa 1992  659081517
-34    Africa 1997  743832984
-35    Africa 2002  833723916
-36    Africa 2007  929539692
-37  Americas 1952  345152446
-38  Americas 1957  386953916
-39  Americas 1962  433270254
-40  Americas 1967  480746623
-41  Americas 1972  529384210
-42  Americas 1977  578067699
-43  Americas 1982  630290920
-44  Americas 1987  682753971
-45  Americas 1992  739274104
-46  Americas 1997  796900410
-47  Americas 2002  849772762
-48  Americas 2007  898871184
-49   Oceania 1952   10686006
-50   Oceania 1957   11941976
-51   Oceania 1962   13283518
-52   Oceania 1967   14600414
-53   Oceania 1972   16106100
-54   Oceania 1977   17239000
-55   Oceania 1982   18394850
-56   Oceania 1987   19574415
-57   Oceania 1992   20919651
-58   Oceania 1997   22241430
-59   Oceania 2002   23454829
-60   Oceania 2007   24549947
+1       &lt;NA&gt; 1952 1395357352
+2       &lt;NA&gt; 1957 1562780599
+3       &lt;NA&gt; 1962 1696357182
+4       &lt;NA&gt; 1967 1905662900
+5       &lt;NA&gt; 1972 2150972248
+6       &lt;NA&gt; 1977 2384513556
+7       &lt;NA&gt; 1982 2610135582
+8       &lt;NA&gt; 1987 2871220762
+9       &lt;NA&gt; 1992 3133292191
+10      &lt;NA&gt; 1997 3383285500
+11      &lt;NA&gt; 2002 3601802203
+12      &lt;NA&gt; 2007 3811953827
+13      &lt;NA&gt; 1952  418120846
+14      &lt;NA&gt; 1957  437890351
+15      &lt;NA&gt; 1962  460355155
+16      &lt;NA&gt; 1967  481178958
+17      &lt;NA&gt; 1972  500635059
+18      &lt;NA&gt; 1977  517164531
+19      &lt;NA&gt; 1982  531266901
+20      &lt;NA&gt; 1987  543094160
+21      &lt;NA&gt; 1992  558142797
+22      &lt;NA&gt; 1997  568944148
+23      &lt;NA&gt; 2002  578223869
+24      &lt;NA&gt; 2007  586098529
+25      &lt;NA&gt; 1952  237640501
+26      &lt;NA&gt; 1957  264837738
+27      &lt;NA&gt; 1962  296516865
+28      &lt;NA&gt; 1967  335289489
+29      &lt;NA&gt; 1972  379879541
+30      &lt;NA&gt; 1977  433061021
+31      &lt;NA&gt; 1982  499348587
+32      &lt;NA&gt; 1987  574834110
+33      &lt;NA&gt; 1992  659081517
+34      &lt;NA&gt; 1997  743832984
+35      &lt;NA&gt; 2002  833723916
+36      &lt;NA&gt; 2007  929539692
+37      &lt;NA&gt; 1952  345152446
+38      &lt;NA&gt; 1957  386953916
+39      &lt;NA&gt; 1962  433270254
+40      &lt;NA&gt; 1967  480746623
+41      &lt;NA&gt; 1972  529384210
+42      &lt;NA&gt; 1977  578067699
+43      &lt;NA&gt; 1982  630290920
+44      &lt;NA&gt; 1987  682753971
+45      &lt;NA&gt; 1992  739274104
+46      &lt;NA&gt; 1997  796900410
+47      &lt;NA&gt; 2002  849772762
+48      &lt;NA&gt; 2007  898871184
+49      &lt;NA&gt; 1952   10686006
+50      &lt;NA&gt; 1957   11941976
+51      &lt;NA&gt; 1962   13283518
+52      &lt;NA&gt; 1967   14600414
+53      &lt;NA&gt; 1972   16106100
+54      &lt;NA&gt; 1977   17239000
+55      &lt;NA&gt; 1982   18394850
+56      &lt;NA&gt; 1987   19574415
+57      &lt;NA&gt; 1992   20919651
+58      &lt;NA&gt; 1997   22241430
+59      &lt;NA&gt; 2002   23454829
+60      &lt;NA&gt; 2007   24549947
 </code></pre>
 <p>As you can see, this involves a lot more work. Most R users will even go so far to tell you that for loops are bad, and that you should use something called <code>apply</code> instead! We’ll cover this in the next lesson, and later we’ll show you another method, <code>foreach</code> which also handles object creation for you.</p>
 <p>For loops are most useful when you’re performing a series of calculations where each iteration depends on the results of the last (for example a random walk).</p>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
-<h4><span class="glyphicon glyphicon-pushpin"></span>Tip: While loops</h4>
+<h4 id="tip-while-loops"><span class="glyphicon glyphicon-pushpin"></span>Tip: While loops</h4>
 </div>
 <div class="panel-body">
 <p>Sometimes you will find yourself needing to repeat an operation until a certain condition is met. You can do this with a <code>while</code> loop.</p>
-<pre class="sourceCode r"><code class="sourceCode r">while(this condition is true){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">while(this condition is true){
   do a thing
-}</code></pre>
+}</code></pre></div>
 <p>As an example, here’s a while loop that generates random numbers from a uniform distribution (the <code>runif</code> function) between 0 and 1 until it gets one that’s less than 0.1.</p>
-<pre class="sourceCode r"><code class="sourceCode r">z &lt;-<span class="st"> </span><span class="dv">1</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z &lt;-<span class="st"> </span><span class="dv">1</span>
 while(z &gt;<span class="st"> </span><span class="fl">0.1</span>){
   z &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)
   <span class="kw">print</span>(z)
-}</code></pre>
+}</code></pre></div>
 <p><code>while</code> loops will not always be appropriate. You have to be particularly careful that you don’t end up in an infinite loop because your condition is never met.</p>
 </div>
 </aside>
 <section class="challenge panel panel-success">
 <div class="panel-heading">
-<h4><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
+<h4 id="challenge-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
 </div>
 <div class="panel-body">
 <p>Write a script that loops through the <code>gapminder</code> data by continent and prints out the mean life expectancy in 1952.</p>
@@ -344,7 +524,7 @@ while(z &gt;<span class="st"> </span><span class="fl">0.1</span>){
 </section>
 <section class="challenge panel panel-success">
 <div class="panel-heading">
-<h4><span class="glyphicon glyphicon-pencil"></span>Challenge 3</h4>
+<h4 id="challenge-3"><span class="glyphicon glyphicon-pencil"></span>Challenge 3</h4>
 </div>
 <div class="panel-body">
 <p>Modify the script so that it loops through the years as well as the continents.</p>
@@ -352,7 +532,7 @@ while(z &gt;<span class="st"> </span><span class="fl">0.1</span>){
 </section>
 <section class="challenge panel panel-success">
 <div class="panel-heading">
-<h4><span class="glyphicon glyphicon-pencil"></span>Challenge 4</h4>
+<h4 id="challenge-4"><span class="glyphicon glyphicon-pencil"></span>Challenge 4</h4>
 </div>
 <div class="panel-body">
 <p>Write a for loop that performs a random walk for 100 steps, then plot the result.</p>

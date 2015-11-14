@@ -1,6 +1,6 @@
 ---
 layout: page
-title: IntermediateR for reproducible scientific analysis
+title: Intermediate R for reproducible scientific analysis
 subtitle: reshape2
 minutes: 20
 ---
@@ -172,6 +172,18 @@ To collapse multiple columns into one we use the `melt` function:
 
 ```r
 library(reshape2)
+```
+
+```
+## 
+## Attaching package: 'reshape2'
+## 
+## The following objects are masked from 'package:data.table':
+## 
+##     dcast, melt
+```
+
+```r
 gapLong <- melt(
   data=gapWide,
   id.vars=c("continent", "country") # All other columns will be collapsed into one
@@ -180,11 +192,16 @@ gapLong <- melt(
 
 ```
 ## Warning in melt.data.table(data = gapWide, id.vars = c("continent",
-## "country")): All 'measure.vars are NOT of the SAME type. By order of
-## hierarchy, the molten data value column will be of type 'double'.
-## Therefore all measure variables that are not of type 'double' will be
-## coerced to. Check the DETAILS section of ?melt.data.table for more on
-## coercion.
+## "country")): 'measure.vars' [pop.1952, pop.1957, pop.1962, pop.1967, pop.
+## 1972, pop.1977, pop.1982, pop.1987, pop.1992, pop.1997, pop.2002, pop.
+## 2007, lifeExp.1952, lifeExp.1957, lifeExp.1962, lifeExp.1967, lifeExp.
+## 1972, lifeExp.1977, lifeExp.1982, lifeExp.1987, lifeExp.1992, lifeExp.1997,
+## lifeExp.2002, lifeExp.2007, gdpPercap.1952, gdpPercap.1957, gdpPercap.1962,
+## gdpPercap.1967, gdpPercap.1972, gdpPercap.1977, gdpPercap.1982, gdpPercap.
+## 1987, gdpPercap.1992, gdpPercap.1997, gdpPercap.2002, gdpPercap.2007] are
+## not all of the same type. By order of hierarchy, the molten data value
+## column will be of type 'double'. All measure variables not of type 'double'
+## will be coerced to. Check DETAILS in ?melt.data.table for more on coercion.
 ```
 
 We get a warning because the 'pop' columns are of type 'integer' (i.e. whole 
@@ -198,21 +215,6 @@ variable type and year:
 
 ```r
 gapLong[, c("var", "year") := colsplit(variable, "\\.", c("var", "year"))]
-```
-
-```
-##       continent        country       variable       value       var year
-##    1:    Africa        Algeria       pop.1952 9279525.000       pop 1952
-##    2:    Africa         Angola       pop.1952 4232095.000       pop 1952
-##    3:    Africa          Benin       pop.1952 1738315.000       pop 1952
-##    4:    Africa       Botswana       pop.1952  442308.000       pop 1952
-##    5:    Africa   Burkina Faso       pop.1952 4469979.000       pop 1952
-##   ---                                                                   
-## 5108:    Europe    Switzerland gdpPercap.2007   37506.419 gdpPercap 2007
-## 5109:    Europe         Turkey gdpPercap.2007    8458.276 gdpPercap 2007
-## 5110:    Europe United Kingdom gdpPercap.2007   33203.261 gdpPercap 2007
-## 5111:   Oceania      Australia gdpPercap.2007   34435.367 gdpPercap 2007
-## 5112:   Oceania    New Zealand gdpPercap.2007   25185.009 gdpPercap 2007
 ```
 
 Let's break this down.
@@ -231,21 +233,6 @@ Now that we're happy this has worked, we can delete the old `variable` column:
 
 ```r
 gapLong[,variable := NULL]
-```
-
-```
-##       continent        country       value       var year
-##    1:    Africa        Algeria 9279525.000       pop 1952
-##    2:    Africa         Angola 4232095.000       pop 1952
-##    3:    Africa          Benin 1738315.000       pop 1952
-##    4:    Africa       Botswana  442308.000       pop 1952
-##    5:    Africa   Burkina Faso 4469979.000       pop 1952
-##   ---                                                    
-## 5108:    Europe    Switzerland   37506.419 gdpPercap 2007
-## 5109:    Europe         Turkey    8458.276 gdpPercap 2007
-## 5110:    Europe United Kingdom   33203.261 gdpPercap 2007
-## 5111:   Oceania      Australia   34435.367 gdpPercap 2007
-## 5112:   Oceania    New Zealand   25185.009 gdpPercap 2007
 ```
 
 Finally, to split out the `value` column into the groups stored in `var`, we use

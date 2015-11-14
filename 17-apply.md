@@ -1,6 +1,6 @@
 ---
 layout: page
-title: IntermediateR for reproducible scientific analysis
+title: Intermediate R for reproducible scientific analysis
 subtitle: Apply functions
 minutes: 20
 ---
@@ -120,10 +120,10 @@ apply(r, 1, max)
 
 
 ~~~{.output}
-         A          B          C          D          E          F 
- 0.1100324  1.6890364  0.4121760  0.4107368  0.9641043  1.4261307 
-         G          H          I          J 
- 1.1943626  0.1369749 -0.3391804  1.5082227 
+        A         B         C         D         E         F         G 
+1.9026721 0.8409824 1.2589881 2.3216163 0.9566330 1.3741352 1.8549427 
+        H         I         J 
+1.1066072 1.0799746 0.8618778 
 
 ~~~
 
@@ -138,7 +138,7 @@ apply(r, 2, max)
 
 ~~~{.output}
         a         b         c         d 
-1.6890364 1.1943626 1.5082227 0.9899344 
+1.7335561 1.9026721 0.8618778 2.3216163 
 
 ~~~
 
