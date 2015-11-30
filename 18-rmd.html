@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: R for reproducible scientific analysis</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">R for reproducible scientific analysis</h1></a>
+          <h2 class="subtitle">Split-apply-combine</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2 id="learning-objectives"><span class="glyphicon glyphicon-certificate"></span>Learning objectives</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>To be able to create html pages, word, and PDF documents with embedded R code and figures.</li>
+</ul>
+</div>
+</section>
+<p>RStudio makes it easy to create documents with both text and R code. Let’s try it out!</p>
+<p>In RStudio, go to the “File” menu, then select “New File”, then select “R Markdown…”. The following window should pop up:</p>
+<div class="figure">
+<img src="img/18-new-rmd.png" alt="Creating a new R markdown document" />
+<p class="caption">Creating a new R markdown document</p>
+</div>
+<p>Selecting the “HTML”, “PDF”, or “Word” options changes the type of document that you will finally generate.</p>
+<p>For now we’ll select “HTML”.</p>
+<p>A new file should open in the RStudio Source editing pane that looks like this:</p>
+<div class="figure">
+<img src="img/18-rmd-template.png" alt="Template text you see when you create a new R markdown document" />
+<p class="caption">Template text you see when you create a new R markdown document</p>
+</div>
+<p>R markdown documents have three types of content. R code, which is written in blocks surrounded by three back ticks: ```. A YAML header at the top of the page containing details about the document such as the title, author and date, and plain text. These control how the final document will appear. Lets test it out!</p>
+<p>Above the source pane you should see a ball of yarn labelled “Knit HTML”. Press it!</p>
+<p>Some code should run in the R console and a new window should open:</p>
+<div class="figure">
+<img src="img/18-rendered-template.png" alt="Rendered template document" />
+<p class="caption">Rendered template document</p>
+</div>
+<p>In the HTML document, you can see the header information has been turned into a large title. You should see the first code block, as well as the output it generates if you were to run it in R! The second code block has been hidden, and the plot it generates has been embedded in the document.</p>
+<p>The plain text has been rendered using a lightweight syntax called “markdown”. This allows you to apply formatting to the plain text. For example wrapping a word with two stars: **makes bold text** in the final document!</p>
+<p>RStudio provides a <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">handy cheat sheet</a> containing the formatting syntax as well as options for modifying the way R code is run inside the code blocks.</p>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
+</div>
+<div class="panel-body">
+<p>Write a sentence containing words with bold, italics, and underlined formatting.</p>
+</div>
+</section>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-2"><span class="glyphicon glyphicon-pencil"></span>Challenge 2</h4>
+</div>
+<div class="panel-body">
+<p>In a plain text section, create a link to the Software Carpentry website (http://software-carpentry.org/)</p>
+</div>
+</section>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-3"><span class="glyphicon glyphicon-pencil"></span>Challenge 3</h4>
+</div>
+<div class="panel-body">
+<p>Change the size of the plot generated by the second code block to be 3 inches wide and 5 inches high (hint, you will need to add options to the <code>{r}</code> at the top of the code block!)</p>
+</div>
+</section>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-4"><span class="glyphicon glyphicon-pencil"></span>Challenge 4</h4>
+</div>
+<div class="panel-body">
+<p>Add a new code block that reads in the gapminder data, and prints out the total GDP for each continent in 1977</p>
+</div>
+</section>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h4 id="caching-slow-code"><span class="glyphicon glyphicon-pushpin"></span>Caching slow code</h4>
+</div>
+<div class="panel-body">
+<p>Sometimes our analyses can take minutes, hours, or even days to run! Waiting for this code to run every time we generate the final document from R markdown would be impossible. To avoid this, add the option <code>cache=TRUE</code> to the start of your code block (e.g. <code>{r, cache=TRUE}</code> instead of <code>{r}</code>).</p>
+</div>
+</aside>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h4 id="scientific-references"><span class="glyphicon glyphicon-pushpin"></span>Scientific references</h4>
+</div>
+<div class="panel-body">
+<p>R Studio can also handle reference management. See <a href="http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">this guide</a>.</p>
+</div>
+</aside>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>

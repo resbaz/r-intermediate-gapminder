@@ -48,7 +48,7 @@ and are expected knowledge for this workshop:
 
 ### Session 2 (~ 3 hours)
 
-6.  [R markdown](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+6.  [R markdown](18-rmd.html)
 7.  [plyr](12-plyr.html)
 8.  [Parallel for loops](19-foreach.html)
 9.  [Functions](07-functions.html)
