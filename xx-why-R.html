@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: R for reproducible scientific analysis</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">R for reproducible scientific analysis</h1></a>
+          <h2 class="subtitle">Why use R?</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h3 id="learning-objectives"><span class="glyphicon glyphicon-certificate"></span>Learning Objectives</h3>
+</div>
+<div class="panel-body">
+<ul>
+<li>To get a taste of R’s powerful visualisation capabilities</li>
+<li>To get a taste of R’s powerful statistical analysis capabilities</li>
+<li>To show how interweaving those capabilities pays off</li>
+</ul>
+</div>
+</section>
+<h3 id="introduction-to-r">Introduction to R</h3>
+<p>Welcome to the R portion of the Software Carpentry workshop. We’re going to show you how R and RStudio can help you understand large data sets. We’ll also guide your first steps towards using them effectively for your own work.</p>
+<blockquote>
+<h3 id="installation">Installation</h3>
+<ul>
+<li>Download RStudio from <a href="http://www.rstudio.com/products/rstudio/download/" class="uri">http://www.rstudio.com/products/rstudio/download/</a></li>
+<li>(Download gapminder data – can we include in this repo?}</li>
+<li>Once you’ve got RStudio installed, open it.</li>
+<li>In the interactive console (left tab), type:</li>
+<li><blockquote>
+<p>install.packages(‘ggplot2’, ‘dplyr’, ‘tidyr’)</p>
+</blockquote></li>
+<li>and hit return, which will tell RStudio to find and install packages that we’re going to use.</li>
+<li>(what else?)</li>
+</ul>
+</blockquote>
+<p>We’re going to start with a simple but powerful example of how R can help you visualize, manipulate, and analyze data. In the interactive console, enter each command. Later lessons will go more deeply into what they do and how to effectively leverage R and its packages.</p>
+<p>Let’s start by loading a data set and seeing how big it is.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gapminder-FiveYearData.csv&quot;</span>, <span class="dt">header=</span><span class="ot">TRUE</span>, <span class="dt">sep=</span><span class="st">&#39;,&#39;</span>)
+<span class="kw">nrow</span>(gapminder)</code></pre></div>
+<pre class="output"><code>[1] 1704
+</code></pre>
+<p>1,704 entries: that’s too many to understand by reading. Let’s look at the first few entries to get a better sense of what we have:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(gapminder)</code></pre></div>
+<pre class="output"><code>      country year      pop continent lifeExp gdpPercap
+1 Afghanistan 1952  8425333      Asia  28.801  779.4453
+2 Afghanistan 1957  9240934      Asia  30.332  820.8530
+3 Afghanistan 1962 10267083      Asia  31.997  853.1007
+4 Afghanistan 1967 11537966      Asia  34.020  836.1971
+5 Afghanistan 1972 13079460      Asia  36.088  739.9811
+6 Afghanistan 1977 14880372      Asia  38.438  786.1134
+</code></pre>
+<p>Interesting: the data concerns countries, years, “pop”, “lifeExp”, and “gdpPercap”. (The person who created the data set choose those abbreviations for “Population”, “Life Expectancy”, and “GDP per Capita,” respectively.) Let’s see if we can get a better handle on it by visualizing it. Load the <code>ggplot2</code> plotting package and construct a scatter plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>(<span class="dt">data =</span> gapminder, <span class="kw">aes</span>(<span class="dt">x =</span> lifeExp, <span class="dt">y =</span> gdpPercap)) +
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="fig/lifeExp-gdpPercap-scatter-1.png" title="plot of chunk lifeExp-gdpPercap-scatter" alt="plot of chunk lifeExp-gdpPercap-scatter" style="display: block; margin: auto;" /></p>
+<p>In the lower right panel, you should see a graph that RStudio produced in response to your command. What can you tell about this data set from this initial graph?</p>
+<p>This first graph suggests a relationship between life expectancy and GDP per capita. Another relationship we might be interested in is the change in life expectancy over time by country and continent.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> gapminder, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> lifeExp, <span class="dt">by =</span> country, <span class="dt">colour =</span> continent)) +
+<span class="st">  </span><span class="kw">geom_line</span>() +
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="fig/year-lifeExp-1.png" title="plot of chunk year-lifeExp" alt="plot of chunk year-lifeExp" style="display: block; margin: auto;" /></p>
+<p>The plots above are great for visualizing data, but what if we want to figure out something quantitative about the relationships and patterns we observed? R gives you flexible and powerful tools to do manipulation and computation on your data.</p>
+<p>Let’s use the <code>dplyr</code> package to find the pairwise correlations between life expectancy, GDP per capita, and population.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+cors &lt;-<span class="st"> </span>gapminder %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(year) %&gt;%
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">gdpPercap.lifeExp =</span> <span class="kw">cor</span>(gdpPercap, lifeExp),
+            <span class="dt">gdpPercap.pop =</span> <span class="kw">cor</span>(gdpPercap, pop),
+            <span class="dt">pop.lifeExp =</span> <span class="kw">cor</span>(pop, lifeExp))
+<span class="kw">head</span>(cors)</code></pre></div>
+<pre class="output"><code>Source: local data frame [6 x 4]
+
+   year gdpPercap.lifeExp gdpPercap.pop  pop.lifeExp
+  (int)             (dbl)         (dbl)        (dbl)
+1  1952         0.2780236   -0.02526041 -0.002724782
+2  1957         0.3037445   -0.02807342  0.014492716
+3  1962         0.3832211   -0.03165089 -0.031299202
+4  1967         0.4801398   -0.03795448  0.032447402
+5  1972         0.4597014   -0.04367936  0.046951951
+6  1977         0.6198638   -0.05587981  0.042456753
+</code></pre>
+<p>This is interesting, but it’s now in a form that’s hard to give to ggplot. We can use the <code>tidyr</code> package to put the data into tidy form.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)</code></pre></div>
+<pre class="output"><code>Error in library(tidyr): there is no package called &#39;tidyr&#39;
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy.cors &lt;-<span class="st"> </span>cors %&gt;%
+<span class="st">  </span><span class="kw">gather</span>(variables, correlation, gdpPercap.lifeExp, gdpPercap.pop, pop.lifeExp)</code></pre></div>
+<pre class="output"><code>Error in function_list[[k]](value): could not find function &quot;gather&quot;
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(tidy.cors)</code></pre></div>
+<pre class="output"><code>Error in head(tidy.cors): object &#39;tidy.cors&#39; not found
+</code></pre>
+<p>Now we can visualize all of these relationships on one plot, and see how the correlations between all these variables change over time.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tidy.cors, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> correlation, <span class="dt">colour =</span> variables)) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">geom_line</span>() +
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<pre class="output"><code>Error in ggplot(tidy.cors, aes(x = year, y = correlation, colour = variables)): object &#39;tidy.cors&#39; not found
+</code></pre>
+<p>Just a few minutes with R, and we have learned that our data set contains a string and interesting relationship between GDP per capita and life expectancy.</p>
+<p>Now let’s dig into the details of using R.</p>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>
