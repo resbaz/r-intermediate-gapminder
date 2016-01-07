@@ -92,5 +92,5 @@ as options for modifying the way R code is run inside the code blocks.
 
 > #### Scientific references {.callout}
 >
-> R Studio can also handle reference management. See [this guide](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html).
+> R markdown can also handle reference management. See [this guide](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html).
 >
