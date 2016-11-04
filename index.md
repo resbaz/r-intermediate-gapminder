@@ -27,14 +27,14 @@ The following topics are taught in the
 [novice lessons](http://swcarpentry.github.io/r-novice-gapminder)
 and are expected knowledge for this workshop:
 
-1.  [Introduction to R and RStudio](http://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro.html)
-2.  [Project Management](http://swcarpentry.github.io/r-novice-gapminder/02-project-intro.html)
-3.  [Seeking help](http://swcarpentry.github.io/r-novice-gapminder/03-seeking-help.html)
-4.  [Data types and structures](http://swcarpentry.github.io/r-novice-gapminder/04-data-structures-part1.html)
-5.  [Data structures: data frames](http://swcarpentry.github.io/r-novice-gapminder/05-data-structures-part2.html)
-6.  [Subsetting data](http://swcarpentry.github.io/r-novice-gapminder/06-data-subsetting.html)
-7.  [Vectorisation](http://swcarpentry.github.io/r-novice-gapminder/09-vectorisation.html)
-8.  [Writing data](http://swcarpentry.github.io/r-novice-gapminder/11-writing-data.html)
+1.  [Introduction to R and RStudio](http://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro/)
+2.  [Project Management](http://swcarpentry.github.io/r-novice-gapminder/02-project-intro/)
+3.  [Seeking help](http://swcarpentry.github.io/r-novice-gapminder/03-seeking-help/)
+4.  [Data structures](http://swcarpentry.github.io/r-novice-gapminder/04-data-structures-part1/)
+5.  [Exploring Data Frames](http://swcarpentry.github.io/r-novice-gapminder/05-data-structures-part2/)
+6.  [Subsetting data](http://swcarpentry.github.io/r-novice-gapminder/06-data-subsetting/)
+7.  [Vectorisation](http://swcarpentry.github.io/r-novice-gapminder/09-vectorization/)
+8.  [Writing data](http://swcarpentry.github.io/r-novice-gapminder/11-writing-data/)
 
 ## Topics
 
