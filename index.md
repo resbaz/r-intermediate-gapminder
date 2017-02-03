@@ -44,15 +44,15 @@ and are expected knowledge for this workshop:
 2.  [Reshaping data](15-reshape2.html)
 3.  [For loops](16-for.html)
 4.  [Apply functions](17-apply.html)
-5.  [Control flow](http://swcarpentry.github.io/r-novice-gapminder/10-control-flow/)
+5.  [Control flow](http://swcarpentry.github.io/r-novice-gapminder/07-control-flow/)
 
 ### Session 2 (~ 3 hours)
 
 6.  [R markdown](18-rmd.html)
-7.  [plyr](http://swcarpentry.github.io/r-novice-gapminder/12-plyr.)
+7.  [plyr](http://swcarpentry.github.io/r-novice-gapminder/12-plyr/)
 8.  [Parallel for loops](19-foreach.html)
-9.  [Functions](http://swcarpentry.github.io/r-novice-gapminder/07-functions/)
-10. [Wrapping up](http://swcarpentry.github.io/r-novice-gapminder/15-wrap-up/)
+9.  [Functions](http://swcarpentry.github.io/r-novice-gapminder/10-functions/)
+10. [Wrapping up](http://swcarpentry.github.io/r-novice-gapminder/16-wrap-up/)
 
 ## Optional lessons
 
